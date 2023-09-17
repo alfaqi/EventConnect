@@ -4,6 +4,7 @@ import { Button } from "web3uikit";
 import { parse } from "url";
 import { useMoralis } from "react-moralis";
 import LiveBroadcast from "@/components/LiveBroadcast";
+
 export default function live() {
   const { account } = useMoralis();
   const [playbackId, setPlaybackId] = useState("");
@@ -18,10 +19,10 @@ export default function live() {
   useEffect(() => {
     const currentUrl = window.location.href;
     const parsedUrl = parse(currentUrl, true);
-    if (!parsedUrl.query) return;
+    if (parsedUrl.path == "/Live/Live") {
+      window.open("/Events/Events", "_parent");
+    }
 
-    console.log(parsedUrl);
-    // return;
     const urlAuth = parsedUrl.query.auth;
     setAuth(urlAuth);
     const urlTitle = parsedUrl.query.title ? parsedUrl.query.title : "null";
@@ -29,15 +30,9 @@ export default function live() {
     let urlID;
     if (urlAuth == 0) {
       urlID = parsedUrl.query.id ? parsedUrl.query.id : "null";
-      // console.log(urlID);
-      // ("http://localhost:3000/live?id=8483-87ej-09bl-ly04&title=AI%20in%20Business%20Strategy&auth=0");
-      // setStreamKey("https://lvpr.tv/broadcast/9c8b-0mge-li0b-9n4e");
       setStreamKey(urlID);
     } else {
       urlID = parsedUrl.query.id ? parsedUrl.query.id : "null";
-      // console.log(urlID);
-
-      // setPlaybackId("https://lvpr.tv?v=9c8bsat85x645u8p");
       setPlaybackId(urlID);
     }
 
@@ -54,11 +49,7 @@ export default function live() {
               onClick={goLiveFunc}
               theme={goLive ? "secondary" : "primary"}
             />
-            {goLive ? (
-              <LiveBroadcast title={title} streamKey={streamKey} />
-            ) : (
-              <></>
-            )}
+            {goLive && <LiveBroadcast title={title} streamKey={streamKey} />}
           </div>
         ) : (
           <></>
@@ -71,17 +62,12 @@ export default function live() {
         {account ? (
           <div className="container mx-auto">
             <h1 className="py-4 px-4 font-bold text-2xl">{title}</h1>
-
             <Button
               text={goLive ? "Leave Event" : "Go Live"}
               onClick={goLiveFunc}
               theme={goLive ? "secondary" : "primary"}
             />
-            {goLive ? (
-              <LiveFrame title={title} playbackId={playbackId} />
-            ) : (
-              <></>
-            )}
+            {goLive && <LiveFrame title={title} playbackId={playbackId} />}
           </div>
         ) : (
           <></>

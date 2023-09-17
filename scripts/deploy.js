@@ -16,10 +16,6 @@ async function main() {
 
   console.log(frontEndContractsFile);
   console.log(frontEndContractsABIPath);
-  // return;
-
-  // console.log(EventConnect.interface.getAbiCoder());
-  // return;
 
   // Updating Addresses and ABIs of FrontEnd
   if (process.env.NEXT_PUBLIC_UPDATE_FRONT_END) {
@@ -28,6 +24,7 @@ async function main() {
     await updateAbi(EventConnect);
     console.log("Frontend written!");
   }
+
   return;
   console.log("---------------------------------------------");
   await verify(eventConnect.target, []);

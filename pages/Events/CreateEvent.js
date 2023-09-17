@@ -25,12 +25,42 @@ export default () => {
 
     const nowTime2 = new Date() / 1000;
 
-    console.log(nowTime);
-    console.log(nowTime / 1000);
-    console.log(nowTime2);
-    console.log(nowTime2 * 1000);
-    console.log(new Date(nowTime2));
-    console.log(new Date(nowTime2 * 1000));
+    // console.log(nowTime);
+    // console.log(nowTime / 1000);
+    // console.log(nowTime2);
+    // console.log(nowTime2 * 1000);
+    // console.log(new Date(nowTime2));
+    // console.log(new Date(nowTime2 * 1000));
+
+    // const condition = (name, date, image) => {
+    //   // تحقق من أن الاسم ليس فارغًا
+    //   if (name === "") {
+    //     return false;
+    //   }
+
+    // تحقق من أن التاريخ أكبر من تاريخ اليوم بيوم
+    const today = new Date();
+    // const dateObj = new Date(date);
+    if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 <= date) {
+      console.log("الوقت المحدد اكبر من تاريخ اليوم");
+      console.log("date < new Date(today.getTime() + 24 * 60 * 60 * 1000)");
+      console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
+      console.log(new Date(today.getTime()));
+      console.log(`date`);
+      console.log(date);
+
+      // return false;
+    } else {
+      console.log("الوقت المحدد اصغر من تاريخ اليوم");
+
+      console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
+      console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000);
+      console.log(new Date(today.getTime()));
+      console.log(`date`);
+      console.log(new Date(date * 1000));
+      console.log(date);
+    }
+
     // console.log(validDate);
     // if (name == "") return;
     // if (date < nowTime) return;

@@ -1,15 +1,9 @@
 import { useEffect, useState } from "react";
 import { useMoralis, useWeb3Contract } from "react-moralis";
 import networkMapping from "@/constants/networkMapping.json";
-import eduConnectAbi from "@/constants/EventConnect.json";
+import eventConnectAbi from "@/constants/EventConnect.json";
 import EventCard from "@/components/EventCard";
 import Link from "next/link";
-
-// const eventListOffChain = [
-//   "https://bafkreidqrgi5kun2eszgighfylpa5zkzsyc4lhiftyiyoqcrrb4uaqrvty.ipfs.w3s.link/",
-//   "https://bafkreiarhst57ojfns3ujxo65gqopguefehow4vfq7uwltl7j7mxhgpen4.ipfs.w3s.link/",
-//   "https://bafkreihebgteiy3hccjb4kjjjcdztoquqf5bbbz27vg3iqx3af3h363fhy.ipfs.w3s.link/",
-// ];
 
 export default function Events() {
   const [eventConnectAddress, setEventConnectAddress] = useState(0);
@@ -21,37 +15,19 @@ export default function Events() {
   const [endedEvents, setEndedEvents] = useState([]);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
 
-  // const [lastEventIndex, setLastEventIndex] = useState(0);
-
-  // // Get last Index of the Event
-  // const { runContractFunction: getEventIndex } = useWeb3Contract({
-  //   abi: eduConnectAbi,
-  //   contractAddress: networkMapping[chainIdString].EventConnect[0],
-  //   functionName: "getEventIndex",
-  // });
-
-  // const { runContractFunction: getEvent } = useWeb3Contract({
-  //   abi: eduConnectAbi,
-  //   contractAddress: eventConnectAddress,
-  //   functionName: "getEvent",
-  //   params: { eventIndex: "EventId" },
-  // });
+  const maxEvents = 1;
 
   // Get all Events
   const { runContractFunction: getAllEvents } = useWeb3Contract({
-    abi: eduConnectAbi,
+    abi: eventConnectAbi,
     contractAddress: networkMapping[chainIdString].EventConnect[0],
     functionName: "getAllEvents",
   });
 
   async function updateUI() {
-    //on chain
     const allEvents = await getAllEvents();
-    console.log(await getAllEvents());
     if (!allEvents) return;
-    console.log(allEvents);
-    // const getEventIndexa = await getEventIndex();
-    // console.log(getEventIndexa);
+
     let onlineEventsArr = [];
     let endedEventsArr = [];
     let upcomingEventsArr = [];
@@ -65,7 +41,8 @@ export default function Events() {
         })
         .then((data) => {
           const nowTime = new Date() / 1000;
-          if (data.isEnded || nowTime > data.date) {
+
+          if (data.isEnded || nowTime > data.date + data.duration * 60) {
             endedEventsArr.push(data);
           } else if (
             data.date < nowTime &&
@@ -86,11 +63,11 @@ export default function Events() {
 
   useEffect(() => {
     if (isWeb3Enabled) {
-      console.log(chainIdString);
+      // console.log(chainIdString);
       setEventConnectAddress(networkMapping[chainIdString].EventConnect[0]);
 
-      console.log(networkMapping[chainIdString].EventConnect[0]);
-      console.log(eventConnectAddress);
+      // console.log(networkMapping[chainIdString].EventConnect[0]);
+      // console.log(eventConnectAddress);
 
       const updateUIFunc = async () => {
         await updateUI();
@@ -111,44 +88,48 @@ export default function Events() {
           <div className="container mx-auto">
             <h1 className="py-4 px-4 font-bold text-2xl">Now Events</h1>
             <div className="flex flex-wrap gap-2">
-              {onlineEvents.length != 0 ? (
-                onlineEvents.map((event, index) => {
-                  // if (index < 3) {
-                  return (
-                    <EventCard
-                      key={index}
-                      eventConnectAddress={eventConnectAddress}
-                      event={event}
-                      time="online"
-                      myEvents={false}
-                    />
-                  );
-                  // }
-                })
-              ) : (
+              {onlineEvents.slice(0, maxEvents).map((event, index) => {
+                return (
+                  <EventCard
+                    key={index}
+                    eventConnectAddress={eventConnectAddress}
+                    event={event}
+                    time="online"
+                    myEvents={false}
+                  />
+                );
+              })}
+              {onlineEvents.length === 0 && (
                 <div>There is no any Online Events</div>
+              )}
+              {onlineEvents.length >= maxEvents && (
+                <Link href="/Events/NowEvents" className="underline">
+                  More Events
+                </Link>
               )}
             </div>
             <br />
             <hr />
             <h1 className="py-4 px-4 font-bold text-2xl">Upcoming Events</h1>
             <div className="flex flex-wrap gap-2">
-              {upcomingEvents.length != 0 ? (
-                upcomingEvents.map((event, index) => {
-                  // if (index < 3) {
-                  return (
-                    <EventCard
-                      key={index}
-                      eventConnectAddress={eventConnectAddress}
-                      event={event}
-                      time="upcoming"
-                      myEvents={false}
-                    />
-                  );
-                  // }
-                })
-              ) : (
-                <div>There is no any upcoming Events</div>
+              {upcomingEvents.slice(0, maxEvents).map((event, index) => {
+                return (
+                  <EventCard
+                    key={index}
+                    eventConnectAddress={eventConnectAddress}
+                    event={event}
+                    time="upcoming"
+                    myEvents={false}
+                  />
+                );
+              })}
+              {upcomingEvents.length === 0 && (
+                <div>There is no any Online Events</div>
+              )}
+              {upcomingEvents.length >= maxEvents && (
+                <Link href="/Events/UpcomingEvents" className="underline">
+                  More Events
+                </Link>
               )}
             </div>
             <br />
@@ -156,24 +137,28 @@ export default function Events() {
 
             <h1 className="py-4 px-4 font-bold text-2xl">Event Ended</h1>
             <div className="flex flex-wrap gap-2">
-              {endedEvents.length != 0 ? (
-                endedEvents.map((event, index) => {
-                  // if (index < 2) {
-                  return (
-                    <EventCard
-                      key={index}
-                      eventConnectAddress={eventConnectAddress}
-                      event={event}
-                      time="ended"
-                      myEvents={false}
-                    />
-                  );
-                  // }
-                })
-              ) : (
-                <div>There is no any ended Events</div>
+              {endedEvents.slice(0, maxEvents).map((event, index) => {
+                return (
+                  <EventCard
+                    key={index}
+                    eventConnectAddress={eventConnectAddress}
+                    event={event}
+                    time="ended"
+                    myEvents={false}
+                  />
+                );
+              })}
+              {endedEvents.length === 0 && (
+                <div>There is no any Online Events</div>
+              )}
+              {endedEvents.length >= maxEvents && (
+                <Link href="/Events/EndedEvents" className="underline">
+                  More Events
+                </Link>
               )}
             </div>
+            <br />
+            <hr />
           </div>
         </>
       ) : (
@@ -181,4 +166,89 @@ export default function Events() {
       )}
     </>
   );
+}
+
+{
+  // return (
+  //   <>
+  //     {isWeb3Enabled ? (
+  //       <>
+  //         <Link
+  //           href={"/Events"}
+  //           className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
+  //         >
+  //           Back
+  //         </Link>
+  //         <div className="container mx-auto">
+  //           <h1 className="py-4 px-4 font-bold text-2xl">Now Events</h1>
+  //           <div className="flex flex-wrap gap-2">
+  //             {onlineEvents.length != 0 ? (
+  //               onlineEvents.map((event, index) => {
+  //                 // if (index < 3) {
+  //                 return (
+  //                   <EventCard
+  //                     key={index}
+  //                     eventConnectAddress={eventConnectAddress}
+  //                     event={event}
+  //                     time="online"
+  //                     myEvents={false}
+  //                   />
+  //                 );
+  //                 // }
+  //               })
+  //             ) : (
+  //               <div>There is no any Online Events</div>
+  //             )}
+  //           </div>
+  //           <br />
+  //           <hr />
+  //           <h1 className="py-4 px-4 font-bold text-2xl">Upcoming Events</h1>
+  //           <div className="flex flex-wrap gap-2">
+  //             {upcomingEvents.length != 0 ? (
+  //               upcomingEvents.map((event, index) => {
+  //                 // if (index < 3) {
+  //                 return (
+  //                   <EventCard
+  //                     key={index}
+  //                     eventConnectAddress={eventConnectAddress}
+  //                     event={event}
+  //                     time="upcoming"
+  //                     myEvents={false}
+  //                   />
+  //                 );
+  //                 // }
+  //               })
+  //             ) : (
+  //               <div>There is no any upcoming Events</div>
+  //             )}
+  //           </div>
+  //           <br />
+  //           <hr />
+  //           <h1 className="py-4 px-4 font-bold text-2xl">Event Ended</h1>
+  //           <div className="flex flex-wrap gap-2">
+  //             {endedEvents.length != 0 ? (
+  //               endedEvents.map((event, index) => {
+  //                 // if (index < 2) {
+  //                 return (
+  //                   <EventCard
+  //                     key={index}
+  //                     eventConnectAddress={eventConnectAddress}
+  //                     event={event}
+  //                     time="ended"
+  //                     myEvents={false}
+  //                   />
+  //                 );
+  //                 // }
+  //               })
+  //             ) : (
+  //               <div>There is no any ended Events</div>
+  //             )}
+  //           </div>
+  //         </div>
+  //       </>
+  //     ) : (
+  //       <>Please connect your wallet</>
+  //     )}
+  //   </>
+  // );
 }

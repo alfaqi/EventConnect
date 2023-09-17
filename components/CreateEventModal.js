@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import dotenv from "dotenv";
 dotenv.config();
 
 import { Web3Storage } from "web3.storage";
-import { Button, Modal, useNotification } from "web3uikit";
+import { Modal, useNotification } from "web3uikit";
 
 import networkMapping from "../constants/networkMapping.json";
 import eventConnectAbi from "../constants/EventConnect.json";
@@ -27,6 +27,7 @@ export default ({
   const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
   const eventConnectAddress = networkMapping[chainIdString].EventConnect[0];
 
+  // Get the last Event index
   const { runContractFunction: getEventIndex } = useWeb3Contract({
     abi: eventConnectAbi,
     contractAddress: eventConnectAddress,
@@ -37,7 +38,8 @@ export default ({
 
   const dispatch = useNotification();
 
-  async function checkAndSubmit(fullCID) {
+  // Add Event
+  async function addEvent(fullCID) {
     const addEventOptions = {
       abi: eventConnectAbi,
       contractAddress: eventConnectAddress,
@@ -69,56 +71,45 @@ export default ({
       position: "topR",
     });
     onClose && onClose();
+    alert("Done!");
+    window.location.reload();
   };
 
   /**
-   * CID
+   * CID Section
    */
-
   const token = process.env.NEXT_PUBLIC_WEB3_STORAGE_API_TOKEN;
-
   const client = new Web3Storage({ token });
 
   const prefix = "https://";
   const suffix = ".ipfs.w3s.link";
 
   let cid;
+  const metadataTemplate = {
+    eventID: "",
+    name: "",
+    date: "",
+    duration: "",
+    description: "",
+    banner: "",
+    playbackId: "",
+  };
 
   async function createNewEvent() {
     /*
-     ** Get CID
-     */
-    // const res = await client.get(CID); // Web3Response
-    // const files = await res.files(); // Web3File[]
-    // for (const file of files) {
-    //   console.log(`${file.cid} ${file.name} ${file.size}`);
-    // }
-
-    /*
      * Storing Files (Uploading to IPFS)
      */
-
     console.log(`Uploading ${uploadFile.name}...`);
-
-    // const onRootCidReady = (rootCid) => console.log("root cid:", rootCid);
-    // cid = await client.put([uploadFile], { onRootCidReady });
 
     cid = await client.put([uploadFile], {
       wrapWithDirectory: false,
     });
     console.log(`Getting files of ${cid}`);
-    // console.log(`stream ${stream}`);
 
     await setMetadata();
-    // await checkAndSubmit();
   }
 
   async function setMetadata() {
-    // const eventIndex = await getEventIndex();
-    // setEventID(eventIndex);
-    // console.log(`eventID`);
-    // console.log(await getEventIndex());
-
     let eventMetadata = { ...metadataTemplate };
 
     console.log(`Working on ${uploadFile.name}...`);
@@ -135,16 +126,6 @@ export default ({
     await setJsonFile(eventMetadata);
   }
 
-  const metadataTemplate = {
-    eventID: "",
-    name: "",
-    date: "",
-    duration: "",
-    description: "",
-    banner: "",
-    playbackId: "",
-  };
-
   async function setJsonFile(eventMetadata) {
     console.log(`Writing JSON file: ${eventMetadata.name}.json`);
     const buffer = Buffer.from(JSON.stringify(eventMetadata));
@@ -152,7 +133,7 @@ export default ({
     cid = await client.put(files, { wrapWithDirectory: false });
     console.log(`Done writing JSON file: ${eventMetadata.name}.json`);
 
-    checkAndSubmit(`${prefix}${cid}${suffix}`);
+    addEvent(`${prefix}${cid}${suffix}`);
     onClose && onClose();
   }
 
@@ -169,34 +150,11 @@ export default ({
         title="Last step, Check a Banner for your Event"
         okText="Done"
         cancelText="Close"
-        // isOkDisabled={!uploadFile}
       >
-        <p>Event Name: {name}</p>
-        <p>Event Date: {date}</p>
-        <p>Event Duration: {duration}</p>
-        <p>Event Description: {description}</p>
-        <p>
-          Event URL:{" "}
-          {stream ? (
-            <>
-              <a
-                id="liveStream"
-                href={"https://lvpr.tv?v=" + stream.playbackId}
-                target="_blank"
-              >
-                {"https://lvpr.tv?v=" + stream.playbackId}
-              </a>{" "}
-              <Button
-                text="copy"
-                onClick={() => {
-                  copy(`https://lvpr.tv?v=${stream.playbackId}`);
-                }}
-              />
-            </>
-          ) : (
-            <></>
-          )}
-        </p>
+        <p>Name: {name}</p>
+        <p>Date: {date}</p>
+        <p>Duration: {duration}</p>
+        <p>Description: {description}</p>
         <p>Event By: {account}</p>
       </Modal>
     </>

@@ -10,6 +10,7 @@ export default ({
   eventBy,
   date,
   attendees,
+  isParticipantRegistered,
   broadCast,
   isVisible,
   onClose,
@@ -52,7 +53,7 @@ export default ({
         <div className="flex flex-col items-center ">
           {eventEnded === "ended" ? (
             <>
-              <div className="text-red-700 text-2xl">Event Ended</div>
+              <div className="text-red-700 font-bold text-xl">Event Ended</div>
             </>
           ) : (
             <></>
@@ -78,7 +79,7 @@ export default ({
             <hr />
             <p>{attendees} attendees</p>
           </div>
-          {eventEnded != "online" ? (
+          {eventEnded === "online" ? (
             <div>
               <Button text="Goto LiveStream" onClick={gotoEventFunc} />
             </div>

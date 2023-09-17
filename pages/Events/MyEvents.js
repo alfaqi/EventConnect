@@ -12,7 +12,6 @@ export default () => {
   const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
 
   const [arr, setArr] = useState([]);
-  const [lastEventID, setLastEventID] = useState(0);
 
   // Get last Index of the Event
   const { runContractFunction: getEventIndex } = useWeb3Contract({
@@ -99,12 +98,12 @@ export default () => {
     <>
       {account ? (
         <>
-          <Link
+          {/* <Link
             href={"/Events"}
             className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
           >
             Back
-          </Link>
+          </Link> */}
           <div className="container mx-auto">
             <h1 className="py-4 px-4 font-bold text-2xl">My Events</h1>
             <div className="m-2">

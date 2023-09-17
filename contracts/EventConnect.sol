@@ -135,9 +135,10 @@ contract EventConnect {
      */
     function addPoapID(uint256 eventID, uint256 poapID) public {
         require(eventID <= s_eventID, "Invalid event index");
-        require(events[eventID].providePOAP = true);
+        require(events[eventID].poapID == 0, "hhhhhhhhhhhhh");
 
         events[eventID].poapID = poapID;
+        events[eventID].providePOAP = true;
     }
 
     /**
@@ -187,6 +188,7 @@ contract EventConnect {
         uint256 eventID
     ) public view returns (WebinarEvent memory) {
         require(eventID <= s_eventID, "Invalid event index");
+        require(eventID >= 0, "Invalid event index");
         return events[eventID];
     }
 
@@ -203,11 +205,6 @@ contract EventConnect {
      */
     function getPoapID(uint256 eventID) public view returns (uint256) {
         require(eventID <= s_eventID, "Invalid event index");
-        for (uint256 i = 0; i < events.length; i++) {
-            if (events[i].eventID == eventID) {
-                return events[i].poapID;
-            }
-        }
-        return 0;
+        return events[eventID].poapID;
     }
 }

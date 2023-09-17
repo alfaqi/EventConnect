@@ -16,7 +16,10 @@ export default () => {
   const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
 
   const [poapEvent, setPoapEvent] = useState("");
+
   const [poapEventID, setPoapEventID] = useState("");
+
+  const [eventID, setEventID] = useState("");
 
   const [secretCode, setSecretCode] = useState(0);
 
@@ -32,7 +35,7 @@ export default () => {
       contractAddress: networkMapping[chainIdString].EventConnect[0],
       functionName: "getPoapID",
       params: {
-        poapID: poapEventID,
+        eventID: eventID,
       },
     };
 
@@ -53,6 +56,8 @@ export default () => {
 
     console.log(eventObj);
     if (!eventObj) return;
+    setPoapEventID(Number(eventObj));
+
     await getPoapEvent();
   }
 
@@ -113,9 +118,9 @@ export default () => {
             </h1>
             <div className="m-2">
               <Input
-                label="Drop ID"
-                placeholder="Enter Drop id"
-                onChange={(e) => setPoapEventID(e.target.value)}
+                label="Event ID"
+                placeholder="Enter Event id"
+                onChange={(e) => setEventID(e.target.value)}
                 type="number"
               />
             </div>
@@ -123,7 +128,7 @@ export default () => {
               <Button
                 text="Check for Drop"
                 onClick={checkEvent}
-                disabled={poapEventID ? false : true}
+                disabled={eventID ? false : true}
                 theme="primary"
               />
             </div>

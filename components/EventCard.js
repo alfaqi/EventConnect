@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Link } from "web3uikit";
+import { Card } from "web3uikit";
 import Image from "next/image";
 import EventViewModal from "./EventViewModal";
 import eventConnectAbi from "../constants/EventConnect.json";
@@ -27,24 +27,22 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
   const hideEventViewModal = () => setShowEventViewModal(false);
 
   // getEvent Function
-
   const { runContractFunction: getEvent } = useWeb3Contract({
     abi: eventConnectAbi,
     contractAddress: eventConnectAddress,
     functionName: "getEvent",
     params: {
-      eventID: event.eventID, //event.eventID;
+      eventID: event.eventID,
     },
   });
 
   // getEventParticipants Function
-
   const { runContractFunction: getEventParticipants } = useWeb3Contract({
     abi: eventConnectAbi,
     contractAddress: eventConnectAddress,
     functionName: "getEventParticipants",
     params: {
-      eventID: event.eventID, //event.eventID;
+      eventID: event.eventID,
     },
   });
 
@@ -54,7 +52,7 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
     contractAddress: eventConnectAddress,
     functionName: "isParticipantRegistered",
     params: {
-      eventID: event.eventID, //event.eventID;
+      eventID: event.eventID,
       participant: account,
     },
   });
@@ -66,11 +64,25 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
       return;
     }
 
-    if (eventBy.toLowerCase() != account.toLowerCase()) {
-      time == "upcoming"
-        ? setShowRegisteringModal(true)
-        : setShowEventViewModal(true);
-    } else setShowEventViewModal(true);
+    if (eventBy.toLowerCase() === account) {
+      setShowEventViewModal(true);
+      return;
+    }
+    if (time == "ended") {
+      setShowEventViewModal(true);
+      return;
+    }
+    if (time == "upcoming") {
+      setShowRegisteringModal(true);
+      return;
+    }
+    if (!isParticipantRegistered) {
+      setShowRegisteringModal(true);
+      return;
+    }
+
+    setShowEventViewModal(true);
+    // } else
   };
 
   //MyEvents Section
@@ -115,7 +127,7 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
     console.log(await getEvent());
     setEventBy(creatoR.creator);
     setBroadCastKey(creatoR.streamKey);
-    console.log(creatoR.streamKey);
+    // console.log(creatoR.streamKey);
 
     // My Events Section
     const nowTime = new Date() / 1000;
@@ -145,6 +157,7 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
         eventEnded={time}
         event={event}
         date={date}
+        isParticipantRegistered={isParticipantRegistered}
         eventBy={eventBy}
         attendees={attendees}
         broadCast={broadCastKey}
@@ -166,14 +179,14 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
           <Card
             title={name}
             description={"Date: " + date}
-            onClick={eventTime != "online" ? gotoEventFunc : () => {}}
+            onClick={eventTime == "online" ? gotoEventFunc : () => {}}
           >
-            <p>Event ID: {event.eventID}</p>
+            <p>Event ID: {Number(event.eventID) + 1}</p>
             <Image
               loader={() => banner}
               src={banner}
               alt={name}
-              width="400"
+              width="300"
               height="250"
             />
             <div className="p-1 text-base">
@@ -206,7 +219,7 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
             description={"Date: " + date}
             onClick={handleCardClick}
           >
-            <p>Event ID: {event.eventID}</p>
+            <p>Event ID: {Number(event.eventID) + 1}</p>
             <Image
               loader={() => banner}
               src={banner}

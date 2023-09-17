@@ -37,7 +37,6 @@ export default () => {
                 ready
               </li>
               <li>Click Create Drop</li>
-              {/* <li>Have Fun!!</li> */}
             </ol>
           </div>
           <br />

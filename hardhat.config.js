@@ -9,6 +9,9 @@ const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "key";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  paths: {
+    artifacts: "./public/artifacts",
+  },
   solidity: "0.8.19",
   //2) select the default network "gnosis" or "chiado"
   // defaultNetwork: "chiado",
