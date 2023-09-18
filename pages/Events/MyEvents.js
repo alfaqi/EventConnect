@@ -21,11 +21,10 @@ export default () => {
   });
 
   const { runContractFunction } = useWeb3Contract();
-
+  // Getting the events I have participated in
   async function getMyEvents() {
     let myEventsArr = [];
     const LastEventIndex = await getEventIndex();
-    console.log(LastEventIndex);
     for (let i = 0; i < LastEventIndex; i++) {
       const funcOptions = {
         abi: eventConnectAbi,
@@ -41,6 +40,7 @@ export default () => {
         params: funcOptions,
       });
 
+      console.log(isParticipated);
       console.log(isParticipated);
 
       const getEventOptions = {
@@ -85,6 +85,7 @@ export default () => {
 
   async function updateUI() {
     setEventConnectAddress(networkMapping[chainIdString].EventConnect[0]);
+    console.log(networkMapping[chainIdString].EventConnect[0]);
     await getMyEvents();
   }
 
@@ -98,12 +99,6 @@ export default () => {
     <>
       {account ? (
         <>
-          {/* <Link
-            href={"/Events"}
-            className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
-          >
-            Back
-          </Link> */}
           <div className="container mx-auto">
             <h1 className="py-4 px-4 font-bold text-2xl">My Events</h1>
             <div className="m-2">

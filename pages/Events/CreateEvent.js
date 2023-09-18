@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMoralis } from "react-moralis";
-import { Button, Input, TextArea, Upload, Radios, Dropdown } from "web3uikit";
+import { Input, TextArea, Upload, Radios, Dropdown } from "web3uikit";
 import Link from "next/link";
 
 import CreateStreamModal from "@/components/CreateStreamModal";
@@ -21,31 +21,7 @@ export default () => {
 
   const handleCardClick = () => {
     const today = new Date();
-    // const nowTime = new Date();
 
-    // // تحقق من أن التاريخ أكبر من تاريخ اليوم بيوم
-    // // const dateObj = new Date(date);
-    // if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 <= date) {
-    //   console.log("الوقت المحدد اكبر من تاريخ اليوم");
-    //   console.log("date < new Date(today.getTime() + 24 * 60 * 60 * 1000)");
-    //   console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
-    //   console.log(new Date(today.getTime()));
-    //   console.log(`date`);
-    //   console.log(date);
-
-    //   // return false;
-    // } else {
-    //   console.log("الوقت المحدد اصغر من تاريخ اليوم");
-
-    //   console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
-    //   console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000);
-    //   console.log(new Date(today.getTime()));
-    //   console.log(`date`);
-    //   console.log(new Date(date * 1000));
-    //   console.log(date);
-    // }
-
-    // console.log(validDate);
     if (name === "") {
       alert("Please fill the name of Event");
       return;
@@ -58,17 +34,16 @@ export default () => {
       alert("Please upload an image for Event");
       return;
     }
-    if (uploadFile.size > 1000000) {
+    if (uploadFile.size > 5242880) {
       console.log(uploadFile);
-      alert("Image size must be less then 1MB");
+      alert("Image size must be less then 5MB");
       return;
     }
-    if (uploadFile.type != "image/png") {
-      alert("Image must be PNG format file");
+    if (!["image/jpeg", "image/png", "image/gif"].includes(uploadFile.type)) {
+      alert("Image must be PNG / JPG / GIF format file");
       return;
     }
 
-    // alert("Please fill all required fields");
     account ? setShowCreateStreamModal(true) : setShowCreateStreamModal(false);
   };
 
@@ -164,7 +139,6 @@ export default () => {
                 descriptionText="Recommendation: 250px by 250px"
                 onChange={(e) => {
                   setUploadFile(e);
-                  // console.log(uploadFile);
                 }}
               />
             </div>

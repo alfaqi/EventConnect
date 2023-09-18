@@ -54,7 +54,7 @@ export default () => {
     setIsThereEvent(false);
     setShowCreateButton(false);
 
-    if (eventID <= 0) {
+    if (eventID <= -1) {
       alert("Event ID must be bigger then 0");
       return;
     }
@@ -221,7 +221,7 @@ export default () => {
               <Input
                 label="Event ID"
                 placeholder="Enter event id"
-                onChange={(e) => setEventID(e.target.value)}
+                onChange={(e) => setEventID(e.target.value - 1)}
                 type="number"
               />
             </div>

@@ -4,7 +4,6 @@ import Image from "next/image";
 import eventConnectAbi from "../constants/EventConnect.json";
 import { useMoralis, useWeb3Contract } from "react-moralis";
 
-//Attened Card
 export default ({
   eventConnectAddress,
   event,
@@ -15,16 +14,11 @@ export default ({
   isVisible,
   onClose,
 }) => {
-  // const { account } = useMoralis();
-
   const { runContractFunction } = useWeb3Contract();
 
   const dispatch = useNotification();
 
   async function registerEvent() {
-    // console.log(eventConnectAddress);
-    // console.log(isParticipantRegistered);
-    // return;
     const registerEventOptions = {
       abi: eventConnectAbi,
       contractAddress: eventConnectAddress,
@@ -44,8 +38,6 @@ export default ({
     });
   }
   async function UnregisterEvent() {
-    // console.log(eventConnectAddress);
-    // console.log(index);
     const unregisterEventOptions = {
       abi: eventConnectAbi,
       contractAddress: eventConnectAddress,
@@ -95,7 +87,7 @@ export default ({
         }}
       >
         <div className="flex flex-col items-center gap-4">
-          <p>Event ID: {event.eventID}</p>
+          <p>Event ID: {event.eventID + 1}</p>
           <div className="flex flex-col gap-2 border-solid border-2 border-gray-400 rounded p-2 w-fit">
             <Image
               loader={() => event.banner}

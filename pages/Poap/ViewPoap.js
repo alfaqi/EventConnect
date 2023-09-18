@@ -16,20 +16,18 @@ export default () => {
   const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
 
   const [poapEvent, setPoapEvent] = useState("");
-
   const [poapEventID, setPoapEventID] = useState("");
-
   const [eventID, setEventID] = useState("");
-
-  const [secretCode, setSecretCode] = useState(0);
-
   const [event, setEvent] = useState(false);
 
   const { runContractFunction } = useWeb3Contract();
 
   async function checkEvent() {
     setEvent(false);
-
+    if (eventID <= -1) {
+      alert("Event ID must be bigger then 0");
+      return;
+    }
     const getEventOptions = {
       abi: eventConnectAbi,
       contractAddress: networkMapping[chainIdString].EventConnect[0],
@@ -43,9 +41,7 @@ export default () => {
     const eventObj = await runContractFunction({
       params: getEventOptions,
       onSuccess: () => {
-        // if (event?.creator.toLowerCase() == account)
         setEvent(true);
-        // else alert("You didn't create this event!");
       },
       onError: (error) => {
         console.log(error);
@@ -53,6 +49,7 @@ export default () => {
         alert("There is no event created!");
       },
     });
+    console.log(Number(eventObj));
 
     console.log(eventObj);
     if (!eventObj) return;
@@ -117,7 +114,7 @@ export default () => {
               <Input
                 label="Event ID"
                 placeholder="Enter Event id"
-                onChange={(e) => setEventID(e.target.value)}
+                onChange={(e) => setEventID(e.target.value - 1)}
                 type="number"
               />
             </div>
@@ -125,7 +122,7 @@ export default () => {
               <Button
                 text="Check for Drop"
                 onClick={checkEvent}
-                disabled={eventID ? false : true}
+                disabled={eventID + 1 ? false : true}
                 theme="primary"
               />
             </div>
