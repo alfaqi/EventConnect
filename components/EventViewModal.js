@@ -43,12 +43,12 @@ export default ({
       isOkDisabled="true"
     >
       <div
-      // style={{
-      //   alignItems: "left",
-      //   display: "flex",
-      //   flexDirection: "column",
-      //   justifyContent: "center",
-      // }}
+        style={{
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
       >
         <div className="flex flex-col  ">
           {eventEnded === "ended" ? (
