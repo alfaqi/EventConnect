@@ -36,8 +36,10 @@ contract EventConnect {
     // Main Functions
 
     /**
-     * @notice Method for register participants
-     * @param eventID ID of event
+     * @notice Registers a participant for an event.
+     * @dev Only participants who are not already registered and if the event is not ended can register.
+     * @param eventID The ID of the event to register for.
+     * @return True if the registration is successful, otherwise false.
      */
     function register(uint256 eventID) public returns (bool) {
         require(eventID <= s_eventID, "Invalid event index");
@@ -57,10 +59,9 @@ contract EventConnect {
     }
 
     /**
-     * @notice Method for unregister participants
-     * @param eventID ID of event
-     * @dev Check for participant if exist or not
-     * @dev Move the exists participant to last of array to delete him/her
+     * @notice Unregisters a participant from an event.
+     * @dev Participants can unregister only if they are already registered.
+     * @param eventID The ID of the event to unregister from.
      */
     function unregister(uint256 eventID) public {
         require(eventID < events.length, "Invalid event index");
@@ -94,10 +95,10 @@ contract EventConnect {
     }
 
     /**
-     * @notice Method for add new event
-     * @param eventURI URL (but it's called URI) it contants the details of event, which stored in IPFS
-     * @param streamKey ID of the event that related to event creator
-     * @param poapID ID of artwork of Poap, in-case is there any
+     * @notice Adds a new event to the contract.
+     * @param eventURI The URI containing event details stored in IPFS.
+     * @param streamKey The key used to start the event livestream.
+     * @param poapID The ID of the Poap artwork, if available.
      */
     function addEvent(
         string memory eventURI,
@@ -120,8 +121,8 @@ contract EventConnect {
     }
 
     /**
-     * @notice Method for end an event
-     * @param eventID ID of event
+     * @notice Ends an event, preventing further registrations.
+     * @param eventID The ID of the event to end.
      */
     function endEvent(uint256 eventID) public {
         require(eventID <= s_eventID, "Invalid event index");
@@ -132,22 +133,23 @@ contract EventConnect {
     }
 
     /**
-     * @notice Method for add ID of Drop of poap artwork, for send it to participants
-     * @param eventID ID of event
-     * @param poapID ID of Drop of poap
+     * @notice Adds the ID of a Poap artwork drop for an event.
+     * @param eventID The ID of the event to add the Poap ID to.
+     * @param poapID The ID of the Poap artwork drop.
      */
     function addPoapID(uint256 eventID, uint256 poapID) public {
         require(eventID <= s_eventID, "Invalid event index");
-        require(events[eventID].poapID == 0, "hhhhhhhhhhhhh");
+        require(events[eventID].poapID == 0);
 
         events[eventID].poapID = poapID;
         events[eventID].providePOAP = true;
     }
 
     /**
-     * @notice Method for checking if the participant is register to spicific event
-     * @param eventID ID of event
-     * @param participant Address of participant
+     * @notice Checks if a participant is registered for a specific event.
+     * @param eventID The ID of the event to check registration for.
+     * @param participant The address of the participant to check.
+     * @return True if the participant is registered, otherwise false.
      */
     function isParticipantRegistered(
         uint256 eventID,
@@ -165,16 +167,17 @@ contract EventConnect {
     // Getter Functions
 
     /**
-     * @notice This method returns the ID of event
-     * @dev The variable is Private and State Variable type
+     * @notice Gets the total number of events.
+     * @return The total number of events created.
      */
     function getEventIndex() public view returns (uint256) {
         return s_eventID;
     }
 
     /**
-     * @notice This method returns all paricipants they are registered to spicific event
-     * @param eventID ID of event
+     * @notice Gets the list of participants for a specific event.
+     * @param eventID The ID of the event to retrieve participants for.
+     * @return An array of participant addresses.
      */
     function getEventParticipants(
         uint256 eventID
@@ -184,8 +187,9 @@ contract EventConnect {
     }
 
     /**
-     * @notice This method returns spicific event
-     * @param eventID ID of event
+     * @notice Gets details of a specific event.
+     * @param eventID The ID of the event to retrieve details for.
+     * @return An object containing event details.
      */
     function getOneEvent(
         uint256 eventID
@@ -196,15 +200,17 @@ contract EventConnect {
     }
 
     /**
-     * @notice This method returns all events as Array
+     * @notice Gets an array of all events.
+     * @return An array of all events stored in the contract.
      */
     function getAllEvents() public view returns (WebinarEvent[] memory) {
         return events;
     }
 
     /**
-     * @notice This method returns spicific POAP
-     * @param eventID ID of event
+     * @notice Gets the Poap ID for a specific event.
+     * @param eventID The ID of the event to retrieve the Poap ID for.
+     * @return The Poap ID associated with the event.
      */
     function getPoapID(uint256 eventID) public view returns (uint256) {
         require(eventID <= s_eventID, "Invalid event index");

@@ -15,6 +15,7 @@ const apiKey = process.env.NEXT_PUBLIC_POAP_API_KEY;
 export default () => {
   // Pre-POAP Section
   const { isWeb3Enabled, account, chainId } = useMoralis();
+  const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -24,14 +25,11 @@ export default () => {
   const [email, setEmail] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
 
-  const [showCreateButton, setShowCreateButton] = useState(false);
-
   const [poapEventID, setPoapEventID] = useState(0);
 
   const [secretCode, setSecretCode] = useState(0);
 
-  const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
-
+  const [showCreateButton, setShowCreateButton] = useState(false);
   const [showCreatePaopModal, setShowCreatePoapModal] = useState(false);
   const hideCreatePoapModal = () => setShowCreatePoapModal(false);
 

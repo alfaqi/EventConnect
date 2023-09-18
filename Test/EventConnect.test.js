@@ -31,7 +31,6 @@ describe("EventConnect", function () {
   it("Should register and unregister participants", async function () {
     const eventIDd = await eventConnect.getEventIndex();
     const eventID = Number(eventIDd) - 1;
-    // console.log(eventID);
     const participant = addr1.address;
 
     await eventConnect.connect(addr1).register(eventID);
