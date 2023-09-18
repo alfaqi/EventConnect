@@ -1,8 +1,8 @@
-import LiveFrame from "@/components/LiveFrame";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "web3uikit";
 import { parse } from "url";
 import { useMoralis } from "react-moralis";
+import LiveFrame from "@/components/LiveFrame";
 import LiveBroadcast from "@/components/LiveBroadcast";
 
 export default function live() {

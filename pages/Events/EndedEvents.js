@@ -59,10 +59,7 @@ export default function Events() {
     <>
       {isWeb3Enabled ? (
         <>
-          <Link
-            href={"/Events/Events"}
-            className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
-          >
+          <Link href={"/Events/Events"} className="Link__Back">
             Back
           </Link>
           <div className="container mx-auto">

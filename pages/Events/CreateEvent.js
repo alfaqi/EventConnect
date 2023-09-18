@@ -20,52 +20,53 @@ export default () => {
   const hideCreateStreamModal = () => setShowCreateStreamModal(false);
 
   const handleCardClick = () => {
-    const nowTime = new Date();
-    const validDate = nowTime.getDate() + 1;
-
-    const nowTime2 = new Date() / 1000;
-
-    // console.log(nowTime);
-    // console.log(nowTime / 1000);
-    // console.log(nowTime2);
-    // console.log(nowTime2 * 1000);
-    // console.log(new Date(nowTime2));
-    // console.log(new Date(nowTime2 * 1000));
-
-    // const condition = (name, date, image) => {
-    //   // تحقق من أن الاسم ليس فارغًا
-    //   if (name === "") {
-    //     return false;
-    //   }
-
-    // تحقق من أن التاريخ أكبر من تاريخ اليوم بيوم
     const today = new Date();
-    // const dateObj = new Date(date);
-    if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 <= date) {
-      console.log("الوقت المحدد اكبر من تاريخ اليوم");
-      console.log("date < new Date(today.getTime() + 24 * 60 * 60 * 1000)");
-      console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
-      console.log(new Date(today.getTime()));
-      console.log(`date`);
-      console.log(date);
+    // const nowTime = new Date();
 
-      // return false;
-    } else {
-      console.log("الوقت المحدد اصغر من تاريخ اليوم");
+    // // تحقق من أن التاريخ أكبر من تاريخ اليوم بيوم
+    // // const dateObj = new Date(date);
+    // if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 <= date) {
+    //   console.log("الوقت المحدد اكبر من تاريخ اليوم");
+    //   console.log("date < new Date(today.getTime() + 24 * 60 * 60 * 1000)");
+    //   console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
+    //   console.log(new Date(today.getTime()));
+    //   console.log(`date`);
+    //   console.log(date);
 
-      console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
-      console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000);
-      console.log(new Date(today.getTime()));
-      console.log(`date`);
-      console.log(new Date(date * 1000));
-      console.log(date);
-    }
+    //   // return false;
+    // } else {
+    //   console.log("الوقت المحدد اصغر من تاريخ اليوم");
+
+    //   console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000));
+    //   console.log(new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000);
+    //   console.log(new Date(today.getTime()));
+    //   console.log(`date`);
+    //   console.log(new Date(date * 1000));
+    //   console.log(date);
+    // }
 
     // console.log(validDate);
-    // if (name == "") return;
-    // if (date < nowTime) return;
-    // if (uploadFile.type != "image/png") return;
-    // if (uploadFile.size > 10000) return;
+    if (name === "") {
+      alert("Please fill the name of Event");
+      return;
+    }
+    if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 >= date) {
+      alert("The date must be bigger then today");
+      return;
+    }
+    if (!uploadFile) {
+      alert("Please upload an image for Event");
+      return;
+    }
+    if (uploadFile.size > 1000000) {
+      console.log(uploadFile);
+      alert("Image size must be less then 1MB");
+      return;
+    }
+    if (uploadFile.type != "image/png") {
+      alert("Image must be PNG format file");
+      return;
+    }
 
     // alert("Please fill all required fields");
     account ? setShowCreateStreamModal(true) : setShowCreateStreamModal(false);
@@ -75,10 +76,7 @@ export default () => {
     <>
       {isWeb3Enabled ? (
         <>
-          <Link
-            href={"/Events"}
-            className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
-          >
+          <Link href={"/Events"} className="Link__Back">
             Back
           </Link>
           <div className="container mx-auto h-56 grid grid-cols-1 gap-2 ">
@@ -184,12 +182,10 @@ export default () => {
                 title="Will you provide proof of attendance?"
               />
             </div>
-            <div className="m-2">
-              <Button
-                onClick={handleCardClick}
-                text="Create Event"
-                theme="primary"
-              />
+            <div>
+              <Link className="Link__Click" onClick={handleCardClick} href="#">
+                Create Event
+              </Link>
             </div>
           </div>
         </>

@@ -41,10 +41,10 @@ export default () => {
 
   const [event, setEvent] = useState(false);
 
-  const { runContractFunction: getEvent } = useWeb3Contract({
+  const { runContractFunction: getOneEvent } = useWeb3Contract({
     abi: eventConnectAbi,
     contractAddress: networkMapping[chainIdString].EventConnect[0],
-    functionName: "getEvent",
+    functionName: "getOneEvent",
     params: {
       eventID: eventID,
     },
@@ -54,8 +54,13 @@ export default () => {
     setEvent(false);
     setShowCreateButton(false);
 
-    // 2- get event object
-    const eventObj = await getEvent();
+    if (eventID <= 0) {
+      alert("Event ID must be bigger then 0");
+      return;
+    }
+
+    // 1- get event object
+    const eventObj = await getOneEvent();
 
     if (!eventObj) {
       alert("Event not existed");
@@ -75,14 +80,16 @@ export default () => {
 
     if (eventObj.providePOAP) {
       alert("You already created Drop!");
+      setShowCreateButton(false);
+    } else {
+      setShowCreateButton(true);
     }
 
     setEvent(true);
-    setShowCreateButton(true);
     await fetchEventData(eventObj.eventURI);
   }
 
-  // 3- fetch event data from event object
+  // 2- fetch event data from event object
   async function fetchEventData(eventObjURI) {
     await fetch(eventObjURI)
       .then((response) => {
@@ -92,7 +99,7 @@ export default () => {
         return response.json();
       })
       .then((data) => {
-        // 4- fillful the data that related to create a Drop
+        // 3- fillful the data that related to create a Drop
         setEventObj(data);
 
         setName(`${eventID}-${data.name}-${data.date}`);
@@ -126,13 +133,14 @@ export default () => {
           timeSettings
         );
         setExpiryDate(expiryDateFormatted);
-        setSecretCode(Math.floor(100000 + Math.random() * 900000));
+        if (secretCode == 0)
+          setSecretCode(Math.floor(100000 + Math.random() * 900000));
       });
   }
 
   //POAP Section
   /**
-   * Create drop (event)
+   * Create drop (POAP)
    *  @returns
    */
   async function createPoapDrop() {
@@ -187,6 +195,9 @@ export default () => {
       .catch((err) => alert(err));
   } //  output => EventID
 
+  const handleLink = () => {
+    alert("aaaa");
+  };
   useEffect(() => {
     setEvent(false);
   }, [isWeb3Enabled, account]);
@@ -194,13 +205,10 @@ export default () => {
     <>
       {account ? (
         <>
-          <Link
-            href={"/Poap"}
-            className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
-          >
+          <Link href={"/Poap"} className="Link__Back">
             Back
           </Link>
-          {poapEventID && (
+          {poapEventID ? (
             <CreatePoapModal
               eventID={eventID}
               poapID={poapEventID}
@@ -210,8 +218,10 @@ export default () => {
               isVisible={showCreatePaopModal}
               onClose={hideCreatePoapModal}
             />
+          ) : (
+            <></>
           )}
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col items-center ">
             <h1 className="py-4 px-4 font-bold text-2xl">
               Create Drop (POAP) for participatns
             </h1>
@@ -224,16 +234,13 @@ export default () => {
               />
             </div>
             <div className="m-2">
-              <Button
-                text="Check for Event"
-                onClick={checkEvent}
-                disabled={eventID ? false : true}
-                theme="primary"
-              />
+              <Link onClick={checkEvent} href={"#"} className="Link__Click">
+                Check for Event
+              </Link>
             </div>
             <div>
-              <h5 className="font-bold text-sm">
-                Please use this site to create a Artwork{" "}
+              <h5 className="font-bold m-2 text-sm">
+                Please use this site to create your Artwork{" "}
                 <Link
                   href="https://snowdot.github.io/poap-place/"
                   target="_blank"

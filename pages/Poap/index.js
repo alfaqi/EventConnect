@@ -19,22 +19,19 @@ export default () => {
             signifies their participation in educational events.
           </p>
           <div className="m-2">
-            <Link
-              href="/Poap/CreatePoap"
-              className="bg-green-500 hover:bg-green-700 text-white  py-2 px-4 rounded mt-4 inline-block"
-            >
+            <Link href="/Poap/CreatePoap" className="Link__Click">
               Create Drop
             </Link>
           </div>
           <div>
-            <ol style={{ "list-style-type": "decimal" }} className="m-2">
+            <ol className="m-2">
               <h5 className="font-bold text-l">Steps to Create POAP </h5>
               <li>Check the Event is existed</li>
               <li>Create to Artwork using recommended site</li>
               <li>Upload your Artwork</li>
               <li>
-                Add your email to receive a notification when your drops are
-                ready
+                Add your email to receive the Drop into your account, so you can
+                manage them.
               </li>
               <li>Click Create Drop</li>
             </ol>
@@ -52,10 +49,7 @@ export default () => {
             showcase your participation in educational events.
           </p>
           <div className="m-2">
-            <Link
-              href="/Poap/ViewPoap"
-              className="bg-green-500 hover:bg-green-700 text-white  py-2 px-4 rounded mt-4 inline-block"
-            >
+            <Link href="/Poap/ViewPoap" className="Link__Click">
               View Poap
             </Link>
           </div>

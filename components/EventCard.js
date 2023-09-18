@@ -26,11 +26,11 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
   const hideRegisteringModal = () => setShowRegisteringModal(false);
   const hideEventViewModal = () => setShowEventViewModal(false);
 
-  // getEvent Function
-  const { runContractFunction: getEvent } = useWeb3Contract({
+  // getOneEventFunction
+  const { runContractFunction: getOneEvent } = useWeb3Contract({
     abi: eventConnectAbi,
     contractAddress: eventConnectAddress,
-    functionName: "getEvent",
+    functionName: "getOneEvent",
     params: {
       eventID: event.eventID,
     },
@@ -122,9 +122,9 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
     setAttendees(aCount ? aCount.length : 0);
 
     setIsParticipantRegistered(await isParticipantRegisteredFunc());
-    const creatoR = await getEvent();
+    const creatoR = await getOneEvent();
     console.log(event);
-    console.log(await getEvent());
+    console.log(await getOneEvent());
     setEventBy(creatoR.creator);
     setBroadCastKey(creatoR.streamKey);
     // console.log(creatoR.streamKey);

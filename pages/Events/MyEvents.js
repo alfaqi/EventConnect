@@ -46,7 +46,7 @@ export default () => {
       const getEventOptions = {
         abi: eventConnectAbi,
         contractAddress: networkMapping[chainIdString].EventConnect[0],
-        functionName: "getEvent",
+        functionName: "getOneEvent",
         params: {
           eventID: i,
         },
@@ -126,10 +126,7 @@ export default () => {
                   <div className="m-2">You did not participate an Eevnt </div>
                   <br />
                   <div className="m-2">
-                    <Link
-                      href="/Events/"
-                      className="bg-green-500 hover:bg-green-700 text-white  py-2 px-4 rounded mt-4 inline-block"
-                    >
+                    <Link href="/Events/" className="Link__Click">
                       Do it NOW!
                     </Link>
                   </div>

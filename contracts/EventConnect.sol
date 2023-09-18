@@ -39,18 +39,21 @@ contract EventConnect {
      * @notice Method for register participants
      * @param eventID ID of event
      */
-    function register(uint256 eventID) public {
+    function register(uint256 eventID) public returns (bool) {
         require(eventID <= s_eventID, "Invalid event index");
-        require(!events[eventID].isEnded, "Event has ended");
+        require(!events[eventID].isEnded, "Event Already Finshed!");
 
         for (uint256 i = 0; i < events[eventID].attendees.length; i++) {
             require(
                 events[eventID].attendees[i] != msg.sender,
                 "Participant is already registered"
             );
+            return false;
         }
+
         events[eventID].attendees.push(msg.sender);
         emit ParticipantRegistered(msg.sender, eventID);
+        return true;
     }
 
     /**
@@ -122,7 +125,7 @@ contract EventConnect {
      */
     function endEvent(uint256 eventID) public {
         require(eventID <= s_eventID, "Invalid event index");
-        require(events[eventID].isEnded, "Event Already Finshed!");
+        require(!events[eventID].isEnded, "Event Already Finshed!");
 
         events[eventID].isEnded = true;
         emit EventEnded(eventID);
@@ -184,7 +187,7 @@ contract EventConnect {
      * @notice This method returns spicific event
      * @param eventID ID of event
      */
-    function getEvent(
+    function getOneEvent(
         uint256 eventID
     ) public view returns (WebinarEvent memory) {
         require(eventID <= s_eventID, "Invalid event index");

@@ -106,10 +106,7 @@ export default () => {
     <>
       {account ? (
         <>
-          <Link
-            href={"/Poap"}
-            className="bg-green-500 hover:bg-green-700 text-white  py-1 px-2 rounded mt-2 inline-block"
-          >
+          <Link href={"/Poap"} className="Link__Back">
             Back
           </Link>
           <div className="flex flex-col items-center gap-2">

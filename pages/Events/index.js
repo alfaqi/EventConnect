@@ -14,10 +14,7 @@ export default function Events() {
             seminar to share knowledge and engage with your audience.
           </p>
           <div className="m-2">
-            <Link
-              href="/Events/CreateEvent"
-              className="bg-green-500 hover:bg-green-700 text-white  py-2 px-4 rounded mt-4 inline-block"
-            >
+            <Link href="/Events/CreateEvent" className="Link__Click">
               Create Now
             </Link>
           </div>
@@ -31,10 +28,7 @@ export default function Events() {
             Participate in these events to enhance your knowledge and skills.
           </p>
           <div className="m-2">
-            <Link
-              href="/Events/Events"
-              className="bg-green-500 hover:bg-green-700 text-white  py-2 px-4 rounded mt-4 inline-block"
-            >
+            <Link href="/Events/Events" className="Link__Click">
               Explorer
             </Link>
           </div>
@@ -50,10 +44,7 @@ export default function Events() {
             details of events you've created.
           </p>
           <div className="m-2">
-            <Link
-              href="/Events/MyEvents"
-              className="bg-green-500 hover:bg-green-700 text-white  py-2 px-4 rounded mt-4 inline-block"
-            >
+            <Link href="/Events/MyEvents" className="Link__Click">
               My Events
             </Link>
           </div>

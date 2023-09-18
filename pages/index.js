@@ -14,10 +14,7 @@ const Home = () => {
         <li className="mb-2">Register for upcoming webinars and workshops.</li>
       </ul>
 
-      <Link
-        href="/Events"
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4 inline-block"
-      >
+      <Link href="/Events" className="Link__Click">
         Get Started
       </Link>
     </div>
