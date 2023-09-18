@@ -39,8 +39,9 @@ export default () => {
 
   const [eventObj, setEventObj] = useState(false);
 
-  const [event, setEvent] = useState(false);
+  const [isThereEvent, setIsThereEvent] = useState(false);
 
+  // Get Event by ID Function
   const { runContractFunction: getOneEvent } = useWeb3Contract({
     abi: eventConnectAbi,
     contractAddress: networkMapping[chainIdString].EventConnect[0],
@@ -50,8 +51,9 @@ export default () => {
     },
   });
 
+  // Check for event and meet the requirements
   async function checkEvent() {
-    setEvent(false);
+    setIsThereEvent(false);
     setShowCreateButton(false);
 
     if (eventID <= 0) {
@@ -85,7 +87,10 @@ export default () => {
       setShowCreateButton(true);
     }
 
-    setEvent(true);
+    setIsThereEvent(true);
+
+    // After passing the requirements will
+    // Calling function to gather the information from Event object
     await fetchEventData(eventObj.eventURI);
   }
 
@@ -139,15 +144,7 @@ export default () => {
   }
 
   //POAP Section
-  /**
-   * Create drop (POAP)
-   *  @returns
-   */
-  async function createPoapDrop() {
-    await createDrop();
-
-    // await addPoapID();
-  }
+  // Create Drop Function
   async function createDrop() {
     if (!uploadedImage) return;
     const form = new FormData();
@@ -195,11 +192,8 @@ export default () => {
       .catch((err) => alert(err));
   } //  output => EventID
 
-  const handleLink = () => {
-    alert("aaaa");
-  };
   useEffect(() => {
-    setEvent(false);
+    setIsThereEvent(false);
   }, [isWeb3Enabled, account]);
   return (
     <>
@@ -250,7 +244,7 @@ export default () => {
                 </Link>
               </h5>
             </div>
-            {event ? (
+            {isThereEvent ? (
               <div>
                 <div className="m-4">
                   <Input
@@ -347,7 +341,7 @@ export default () => {
                     <div className="m-4">
                       <Button
                         text="Create Drop"
-                        onClick={createPoapDrop}
+                        onClick={createDrop}
                         theme="primary"
                         disabled={uploadedImage ? false : true}
                       />
