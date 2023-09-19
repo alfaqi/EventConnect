@@ -20,7 +20,7 @@ EventConnect is an integral part of EduConnect, dedicated to event management an
 
 3. **Managing Events:** EventConnect educators can manage their events, including adding new content, assignments, and quizzes.
 
-4. **Poubliing POAP Certifictaion** Educators can provide POAP Certifications to learners who participated in any events.
+4. **Publishing POAP Certification** Educators can provide POAP Certifications to learners who participated in any events.
 
 ## Smart Contract
 
