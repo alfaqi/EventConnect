@@ -21,6 +21,17 @@ contract EventConnect {
     WebinarEvent[] public events;
 
     // Events
+
+    event EventCreated(
+        uint256 indexed eventID,
+        string eventURI,
+        uint256 poapID,
+        string streamKey,
+        address creator
+    );
+
+    event EventEnded(uint256 indexed eventID);
+
     event ParticipantRegistered(
         address indexed participant,
         uint256 indexed eventID
@@ -30,8 +41,6 @@ contract EventConnect {
         address indexed participant,
         uint256 indexed eventID
     );
-
-    event EventEnded(uint256 indexed eventID);
 
     // Main Functions
 
@@ -117,6 +126,7 @@ contract EventConnect {
                 false
             )
         );
+        emit EventCreated(s_eventID, eventURI, poapID, streamKey, msg.sender);
         s_eventID++;
     }
 

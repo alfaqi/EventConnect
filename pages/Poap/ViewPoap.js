@@ -1,29 +1,25 @@
 import { useEffect, useState } from "react";
-import { Button, Input } from "web3uikit";
+import { Input } from "web3uikit";
 import { useMoralis, useWeb3Contract } from "react-moralis";
 import networkMapping from "@/constants/networkMapping.json";
 import eventConnectAbi from "@/constants/EventConnect.json";
 import Link from "next/link";
 
 import dotenv from "dotenv";
-import Image from "next/image";
+import ViewPoapModal from "@/components/ViewPoapModal";
 dotenv.config();
-
-const apiKey = process.env.NEXT_PUBLIC_POAP_API_KEY;
 
 export default () => {
   const { isWeb3Enabled, account, chainId } = useMoralis();
   const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
 
-  const [poapEvent, setPoapEvent] = useState("");
   const [poapEventID, setPoapEventID] = useState("");
-  const [eventID, setEventID] = useState("");
-  const [event, setEvent] = useState(false);
+  const [eventID, setEventID] = useState(0);
 
   const { runContractFunction } = useWeb3Contract();
 
   async function checkEvent() {
-    setEvent(false);
+    setPoapEventID(0);
     if (eventID <= -1) {
       alert("Event ID must be bigger then 0");
       return;
@@ -40,64 +36,30 @@ export default () => {
     // 2- get event object
     const eventObj = await runContractFunction({
       params: getEventOptions,
-      onSuccess: () => {
-        setEvent(true);
+      onSuccess: (poapIDD) => {
+        if (poapIDD.toString() == 0) {
+          alert("You didn't create a drop for this event");
+        }
       },
-      onError: (error) => {
-        console.log(error);
-        setEvent(false);
+      onError: () => {
+        setPoapEventID(0);
         alert("There is no event created!");
       },
     });
-    console.log(Number(eventObj));
 
-    console.log(eventObj);
     if (!eventObj) return;
+
+    if (eventObj.toString() == "1") {
+      setPoapEventID(0);
+      alert("You selected to not provide proof of attendance!");
+      return;
+    }
+
     setPoapEventID(Number(eventObj));
-
-    await getPoapEvent();
-  }
-
-  //POAP Section
-  async function getPoapEvent() {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "x-api-key": apiKey,
-      },
-    };
-    fetch(`https://api.poap.tech/events/id/${poapEventID}`, options)
-      .then((response) => response.json())
-      .then((response) => {
-        console.log(response);
-        setPoapEvent(response);
-      })
-      .catch((err) => console.error(err));
-  }
-
-  //To find out whether your request is still pending or not, use the GET /redeem-requests/active/count endpoint.
-  //A result of 0 means that there are no pending requests
-  async function checkRequest() {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        "x-api-key": apiKey,
-      },
-    };
-
-    fetch(
-      `https://api.poap.tech/redeem-requests/active/count?event_id=${poapEventID}&redeem_type=qr_code`,
-      options
-    )
-      .then((response) => response.json())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err));
   }
 
   useEffect(() => {
-    setEvent(false);
+    setPoapEventID(0);
   }, [isWeb3Enabled, account]);
   return (
     <>
@@ -118,80 +80,14 @@ export default () => {
                 type="number"
               />
             </div>
-            <div className="m-4">
-              <Button
-                text="Check for Drop"
-                onClick={checkEvent}
-                disabled={eventID + 1 ? false : true}
-                theme="primary"
-              />
+            <div className="m-2">
+              <Link className="Link__Click" onClick={checkEvent} href="#">
+                Check for Drop
+              </Link>
             </div>
 
-            {event ? (
-              <>
-                <div className="container mx-auto my-auto h-30 grid grid-cols-2 ">
-                  <div>
-                    <div className="m-4">
-                      <Input
-                        label="Drop ID"
-                        value={poapEvent.id}
-                        state="disabled"
-                        type="text"
-                      />
-                    </div>
-                    <div className="m-4">
-                      <Input
-                        label="Event Name"
-                        value={poapEvent.name}
-                        state="disabled"
-                        type="text"
-                      />
-                    </div>
-                    <div className="m-4">
-                      <Input
-                        label="Event Description"
-                        value={poapEvent.description}
-                        state="disabled"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="m-4">
-                      <Input
-                        label="Start Date"
-                        value={poapEvent.start_date}
-                        state="disabled"
-                        type="text"
-                      />
-                    </div>
-                    <div className="m-4">
-                      <Input
-                        label="End Date"
-                        value={poapEvent.end_date}
-                        state="disabled"
-                      />
-                    </div>
-                    <div className="m-4">
-                      <Input
-                        label="Virtual Event"
-                        value={poapEvent.virtual_event}
-                        state="disabled"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <Image
-                    loader={() => poapEvent.image_url}
-                    src={poapEvent.image_url}
-                    alt={poapEvent.name}
-                    width="400"
-                    height="400"
-                  />
-                </div>
-              </>
+            {poapEventID != 0 ? (
+              <ViewPoapModal poapEventID={poapEventID} />
             ) : (
               <></>
             )}

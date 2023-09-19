@@ -201,7 +201,7 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
               <hr />
               {eventTime != "ended" ? (
                 eventTime == "online" ? (
-                  <p>Goto Event</p>
+                  <p className="text-xl font-bold text-green-700">Goto Event</p>
                 ) : (
                   <p>Upcoming Event</p>
                 )

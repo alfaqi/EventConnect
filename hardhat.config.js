@@ -35,6 +35,7 @@ module.exports = {
     chiado: {
       url: "https://rpc.chiadochain.net",
       gasPrice: 1000000000,
+      chainId: 10200,
       accounts: [accounts],
     },
   },

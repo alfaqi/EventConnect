@@ -18,7 +18,7 @@ async function main() {
   console.log(frontEndContractsABIPath);
 
   // Updating Addresses and ABIs of FrontEnd
-  if (process.env.NEXT_PUBLIC_UPDATE_FRONT_END) {
+  if (process.env.UPDATE_FRONT_END) {
     console.log("Writing to frontend...");
     await updateContractAddresses(EventConnect);
     await updateAbi(EventConnect);
@@ -48,7 +48,6 @@ async function verify(contractAddress, args) {
 }
 
 async function updateAbi(eventConnect) {
-  // const eduConnect = await ethers.getContract("EduConnect");
   fs.writeFileSync(
     `${frontEndContractsABIPath}EventConnect.json`,
     eventConnect.interface.formatJson()

@@ -101,7 +101,7 @@ export default () => {
         <>
           <div className="container mx-auto">
             <h1 className="py-4 px-4 font-bold text-2xl">My Events</h1>
-            <div className="m-2">
+            <div className="flex flex-wrap gap-2">
               {arr.length != 0 ? (
                 arr.map((event) => {
                   return (
@@ -113,7 +113,7 @@ export default () => {
                   );
                 })
               ) : (
-                <>
+                <div>
                   <div className="m-2">You did not create an Eevnt </div>
                   <br />
                   <div className="m-2">OR </div>
@@ -125,7 +125,7 @@ export default () => {
                       Do it NOW!
                     </Link>
                   </div>
-                </>
+                </div>
               )}
             </div>
           </div>

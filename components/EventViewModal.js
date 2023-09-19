@@ -50,7 +50,7 @@ export default ({
           justifyContent: "center",
         }}
       >
-        <div className="flex flex-col  ">
+        <div className="flex flex-col ">
           {eventEnded === "ended" ? (
             <>
               <div className="text-red-700 font-bold text-xl">Event Ended</div>
@@ -58,7 +58,8 @@ export default ({
           ) : (
             <></>
           )}
-          <div className="flex flex-col gap-2 border-solid border-2 border-gray-400 rounded p-2 w-fit">
+          <p>Event ID: {Number(event.eventID) + 1}</p>
+          <div className="flex flex-col gap-2 items-center border-solid border-2 border-gray-400 rounded p-2 w-fit">
             <Image
               loader={() => event.banner}
               src={event.banner}

@@ -89,6 +89,7 @@ export default () => {
 
     // After passing the requirements will
     // Calling function to gather the information from Event object
+    setPoapEventID(eventObj.poapID.toString());
     await fetchEventData(eventObj.eventURI);
   }
 
@@ -136,6 +137,10 @@ export default () => {
           timeSettings
         );
         setExpiryDate(expiryDateFormatted);
+        if (isThereEvent) {
+          console.log(isThereEvent);
+          return;
+        }
         if (secretCode == 0)
           setSecretCode(Math.floor(100000 + Math.random() * 900000));
       });
@@ -144,7 +149,15 @@ export default () => {
   //POAP Section
   // Create Drop Function
   async function createDrop() {
-    if (!uploadedImage) return;
+    if (
+      !["image/jpeg", "image/png", "image/gif"].includes(uploadedImage.type)
+    ) {
+      alert("Image must be PNG / JPG / GIF format file");
+      return;
+    }
+    if (email) {
+      alert("Please enter valid email");
+    }
     const form = new FormData();
     form.append("name", name);
     form.append("description", description ? description : "Description");
@@ -153,7 +166,7 @@ export default () => {
     form.append("expiry_date", expiryDate);
     form.append("image", uploadedImage);
     form.append("secret_code", secretCode);
-    form.append("email", email ? email : "email@email.com");
+    form.append("email", email);
 
     form.append("virtual_event", "true");
     form.append("event_template_id", "1");
@@ -258,7 +271,7 @@ export default () => {
                     <div className="m-4">
                       <Input
                         label="Event ID"
-                        value={eventObj.eventID}
+                        value={Number(eventObj.eventID) + 1}
                         state="disabled"
                         type="text"
                       />
@@ -274,11 +287,28 @@ export default () => {
                     <div className="m-4">
                       <Input
                         label="Event Description"
-                        value={eventObj.description}
+                        value={
+                          eventObj.description
+                            ? eventObj.description
+                            : "Description"
+                        }
                         state="disabled"
                         type="text"
                       />
                     </div>
+                    {showCreateButton && (
+                      <div className="m-4">
+                        <Input
+                          label="Email"
+                          onChange={(e) => setEmail(e.target.value)}
+                          type="email"
+                          placeholder="To receive an email with your drop details"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  <div>
                     <div className="m-4">
                       <Input
                         label="Event Start Date"
@@ -287,9 +317,6 @@ export default () => {
                         type="text"
                       />
                     </div>
-                  </div>
-
-                  <div>
                     <div className="m-4">
                       <Input
                         label="Event End Date"
@@ -304,24 +331,18 @@ export default () => {
                         state="disabled"
                       />
                     </div>
-                    <div className="m-4">
-                      <Input
-                        label="Email"
-                        onChange={(e) => setEmail(e.target.value)}
-                        type="email"
-                        placeholder="To notice you when your POAP is ready"
-                      />
-                    </div>
-                    <div className="m-4">
-                      <Input
-                        label="Secret Code"
-                        value={secretCode}
-                        state="disabled"
-                      />
-                    </div>
+                    {showCreateButton && (
+                      <div className="m-4">
+                        <Input
+                          label="Secret Code"
+                          value={secretCode}
+                          state="disabled"
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
-                <div className="p-auto items-center">
+                <div className="m-2  items-center">
                   <Image
                     loader={() => eventObj.banner}
                     src={eventObj.banner}

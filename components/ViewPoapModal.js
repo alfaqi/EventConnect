@@ -1,60 +1,121 @@
-// import React from "react";
-// import { Modal } from "web3uikit";
-// import dotenv from "dotenv";
-// import Image from "next/image";
-// dotenv.config();
+import { useEffect, useState } from "react";
+import { Input } from "web3uikit";
+import dotenv from "dotenv";
+import Image from "next/image";
+dotenv.config();
 
-// export default ({ poapEvent, code, isVisible, onClose }) => {
-//   return (
-//     <Modal
-//       isVisible={isVisible}
-//       onCancel={onClose}
-//       onCloseButtonPressed={onClose}
-//       title="View Drop Details"
-//       okText="OK"
-//       cancelText="Back"
-//       onOk={onClose}
-//       isOkDisabled="true"
-//     >
-//       <div
-//         style={{
-//           alignItems: "center",
-//           display: "flex",
-//           flexDirection: "column",
-//           justifyContent: "center",
-//         }}
-//       >
-//         <div className="flex flex-col items-center ">
-//           <div className="flex flex-col gap-2 border-solid border-2 border-gray-400 rounded p-2 w-fit">
-//             <Image
-//               loader={() => poapEvent.image_url}
-//               src={poapEvent.image_url}
-//               alt={poapEvent.name}
-//               width="400"
-//               height="400"
-//             />
-//             <b className="text-lg">{poapEvent.id}</b>
-//             <b className="text-lg">{poapEvent.name}</b>
-//             {poapEvent.description}
-//           </div>
-//           <div className="p-1 text-base">
-//             <p>start_date: {poapEvent.start_date}</p>
-//             <hr />
-//             <p>end_date: {poapEvent.end_date}</p>
-//             <hr />
-//             <p>expiry_date: {poapEvent.expiry_date}</p>
-//             <hr />
-//             {code ? (
-//               <>
-//                 <p>Secret Code / Edit Code: {code}</p>
-//                 <hr />
-//               </>
-//             ) : (
-//               <></>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </Modal>
-//   );
-// };
+const apiKey = process.env.NEXT_PUBLIC_POAP_API_KEY;
+
+//POAP Section
+export default ({ poapEventID }) => {
+  const [poapEvent, setPoapEvent] = useState("");
+  async function getPoapEvent() {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-api-key": apiKey,
+      },
+    };
+    await fetch(`https://api.poap.tech/events/id/${poapEventID}`, options)
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        setPoapEvent(response);
+      })
+      .catch((err) => console.error(err));
+    const text = poapEvent?.name;
+
+    console.log(text?.split("-"));
+  }
+
+  //To find out whether your request is still pending or not, use the GET /redeem-requests/active/count endpoint.
+  //A result of 0 means that there are no pending requests
+  async function checkRequest() {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "x-api-key": apiKey,
+      },
+    };
+
+    fetch(
+      `https://api.poap.tech/redeem-requests/active/count?event_id=${poapEventID}&redeem_type=qr_code`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => console.log(response))
+      .catch((err) => console.error(err));
+  }
+  useEffect(() => {
+    getPoapEvent();
+  }, []);
+
+  return (
+    <>
+      <div className="container mx-auto my-auto h-30 grid grid-cols-2 ">
+        <div>
+          <div className="m-4">
+            <Input
+              label="Drop ID"
+              value={poapEvent.id}
+              state="disabled"
+              type="text"
+            />
+          </div>
+          <div className="m-4">
+            <Input
+              label="Event Name"
+              value={poapEvent && poapEvent.name.split("-")[1]}
+              state="disabled"
+              type="text"
+            />
+          </div>
+          <div className="m-4">
+            <Input
+              label="Event Description"
+              value={poapEvent.description}
+              state="disabled"
+              type="text"
+            />
+          </div>
+        </div>
+
+        <div>
+          <div className="m-4">
+            <Input
+              label="Start Date"
+              value={poapEvent.start_date}
+              state="disabled"
+              type="text"
+            />
+          </div>
+          <div className="m-4">
+            <Input
+              label="End Date"
+              value={poapEvent.end_date}
+              state="disabled"
+            />
+          </div>
+          <div className="m-4">
+            <Input
+              label="Virtual Event"
+              value={poapEvent.virtual_event}
+              state="disabled"
+            />
+          </div>
+        </div>
+      </div>
+      <div>
+        <Image
+          loader={() => poapEvent.image_url}
+          src={poapEvent.image_url}
+          alt={poapEvent.name}
+          width="400"
+          height="400"
+        />
+      </div>
+    </>
+  );
+};

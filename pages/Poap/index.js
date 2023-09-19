@@ -31,7 +31,17 @@ export default () => {
               <li>Upload your Artwork</li>
               <li>
                 Add your email to receive the Drop into your account, so you can
-                manage them.
+                manage them.{" "}
+                <p>
+                  Please goto Main site of POAP{" "}
+                  <a
+                    className="underline"
+                    href="https://drops.poap.xyz/"
+                    target="_blank"
+                  >
+                    https://drops.poap.xyz/
+                  </a>
+                </p>
               </li>
               <li>Click Create Drop</li>
             </ol>

@@ -26,10 +26,10 @@ export default () => {
       alert("Please fill the name of Event");
       return;
     }
-    if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 >= date) {
-      alert("The date must be bigger then today");
-      return;
-    }
+    // if (new Date(today.getTime() + 24 * 60 * 60 * 1000) / 1000 >= date) {
+    //   alert("The date must be bigger then today");
+    //   return;
+    // }
     if (!uploadFile) {
       alert("Please upload an image for Event");
       return;
