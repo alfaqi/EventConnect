@@ -61,5 +61,3 @@ This is an original work by our team. We build on top of the following tooling:
 - Demo: <Link>
 
 - Video: <Link>
-
-- Tweet: <Link>
