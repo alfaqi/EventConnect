@@ -53,11 +53,3 @@ This is an original work by our team. We build on top of the following tooling:
 - **IPFS:** IPFS (InterPlanetary File System) is used for decentralized file storage and content retrieval.
 
 - **Livepeer:** Livepeer is employed for livestreaming capabilities, ensuring high-quality live educational events.
-
-## Bonus
-
-- Demo: <Link>
-
-- Video: <Link>
-
-- Tweet: <Link>
