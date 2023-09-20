@@ -1,11 +1,8 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
-const GOERLI_API_KEY = process.env.GOERLI_API_KEY || "http://eth-goerli";
 const accounts = process.env.PRIVATE_KEY || "0xkey";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "key";
-// let accounts = ["your private key here"];
-// let accounts = { mnemonic: "your mnemonic here" };
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -17,12 +14,6 @@ module.exports = {
   // defaultNetwork: "chiado",
   defaultNetwork: "hardhat",
   networks: {
-    goerli: {
-      url: GOERLI_API_KEY,
-      accounts: [accounts],
-      chainId: 5,
-      blockConfirmations: 6,
-    },
     localhost: {
       url: "http://127.0.0.1:8545/",
       chainId: 31337,

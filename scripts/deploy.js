@@ -11,11 +11,7 @@ async function main() {
   console.log("Deployed by:", deployer.address);
 
   const EventConnect = await ethers.deployContract("EventConnect");
-  // const eventConnect = await EventConnect.deploy();
   console.log("Deployed at:", EventConnect.target);
-
-  console.log(frontEndContractsFile);
-  console.log(frontEndContractsABIPath);
 
   // Updating Addresses and ABIs of FrontEnd
   if (process.env.UPDATE_FRONT_END) {
@@ -24,13 +20,9 @@ async function main() {
     await updateAbi(EventConnect);
     console.log("Frontend written!");
   }
-
-  return;
-  console.log("---------------------------------------------");
-  await verify(eventConnect.target, []);
-  console.log("Done");
 }
 
+// There are some issues with verification
 async function verify(contractAddress, args) {
   console.log("Verifying contract...");
   try {
@@ -51,7 +43,6 @@ async function updateAbi(eventConnect) {
   fs.writeFileSync(
     `${frontEndContractsABIPath}EventConnect.json`,
     eventConnect.interface.formatJson()
-    // eventConnect.interface.format(ethers.utils.FormatTypes.json)
   );
 }
 
