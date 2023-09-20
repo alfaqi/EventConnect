@@ -9,7 +9,7 @@ export default () => {
       {isWeb3Enabled ? (
         <div className="container mx-auto">
           <h1 className="py-4 m-2 font-bold text-2xl">
-            Create Drop (POAP) for Participatns
+            Create Drop (POAP) for Participants
           </h1>
           <p className="m-2">
             Easily reward event participants with Proof of Attendance Protocol
@@ -26,14 +26,14 @@ export default () => {
           <div>
             <ol className="m-2">
               <h5 className="font-bold text-l">Steps to Create POAP </h5>
-              <li>Check the Event is existed</li>
-              <li>Create to Artwork using recommended site</li>
-              <li>Upload your Artwork</li>
+              <li>1. Check if the event exists.</li>
+              <li>2. Create artwork using a recommended website.</li>
+              <li>3. Upload your artwork.</li>
               <li>
-                Add your email to receive the Drop into your account, so you can
-                manage them.{" "}
-                <p>
-                  Please goto Main site of POAP{" "}
+                4. Add your email to receive the drop into your account, so you
+                can manage them.{" "}
+                <p className="px-4">
+                  Please go to the main site of POAP{" "}
                   <a
                     className="underline"
                     href="https://drops.poap.xyz/"
@@ -43,7 +43,7 @@ export default () => {
                   </a>
                 </p>
               </li>
-              <li>Click Create Drop</li>
+              <li>5. Click "Create Drop."</li>
             </ol>
           </div>
           <br />

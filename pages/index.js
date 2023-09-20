@@ -9,7 +9,7 @@ const Home = () => {
       <p className="text-lg mb-6 text-center">
         Discover and participate in educational events.
       </p>
-      <ul className="text-left mb-6">
+      <ul className="text-center mb-6">
         <li className="mb-2">Explore a wide range of educational events.</li>
         <li className="mb-2">Register for upcoming webinars and workshops.</li>
       </ul>

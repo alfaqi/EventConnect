@@ -109,11 +109,13 @@ export default () => {
                 })
               ) : (
                 <div>
-                  <div className="m-2">You did not create an Eevnt </div>
+                  <div className="m-2">You did not create an event </div>
                   <br />
                   <div className="m-2">OR </div>
                   <br />
-                  <div className="m-2">You did not participate an Eevnt </div>
+                  <div className="m-2">
+                    You did not participate in an event{" "}
+                  </div>
                   <br />
                   <div className="m-2">
                     <Link href="/Events/" className="Link__Click">

@@ -1,6 +1,5 @@
-import { Button, Modal } from "web3uikit";
+import { Modal } from "web3uikit";
 import { useCreateStream } from "@livepeer/react";
-import copy from "clipboard-copy";
 import CreateEventModal from "./CreateEventModal";
 import { useState } from "react";
 

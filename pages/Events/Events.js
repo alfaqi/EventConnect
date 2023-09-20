@@ -100,9 +100,9 @@ export default () => {
                 );
               })}
               {onlineEvents.length === 0 && (
-                <div>There is no any Online Events</div>
+                <div>There are no online events</div>
               )}
-              {onlineEvents.length >= maxEvents && (
+              {onlineEvents.length > maxEvents && (
                 <Link href="/Events/NowEvents" className="underline">
                   More Events
                 </Link>
@@ -126,9 +126,9 @@ export default () => {
                 );
               })}
               {upcomingEvents.length === 0 && (
-                <div>There is no any Online Events</div>
+                <div>There are no upcoming events</div>
               )}
-              {upcomingEvents.length >= maxEvents && (
+              {upcomingEvents.length > maxEvents && (
                 <Link href="/Events/UpcomingEvents" className="underline">
                   More Events
                 </Link>
@@ -151,10 +151,8 @@ export default () => {
                   />
                 );
               })}
-              {endedEvents.length === 0 && (
-                <div>There is no any Online Events</div>
-              )}
-              {endedEvents.length >= maxEvents && (
+              {endedEvents.length === 0 && <div>There are no ended events</div>}
+              {endedEvents.length > maxEvents && (
                 <Link href="/Events/EndedEvents" className="underline">
                   More Events
                 </Link>

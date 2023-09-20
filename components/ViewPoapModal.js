@@ -51,7 +51,7 @@ export default ({ poapEventID }) => {
 
   return (
     <>
-      <div className="container mx-auto my-auto h-30 grid grid-cols-2 ">
+      <div className="container items-center mx-auto my-auto h-30 grid grid-cols-2 ">
         <div>
           <div className="m-4">
             <Input
@@ -98,7 +98,7 @@ export default ({ poapEventID }) => {
           <div className="m-4">
             <Input
               label="Virtual Event"
-              value={poapEvent.virtual_event}
+              value="Virtual Event"
               state="disabled"
             />
           </div>
