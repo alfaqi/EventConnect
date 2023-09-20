@@ -54,10 +54,10 @@ This is an original work by our team. We build on top of the following tooling:
 
 - **Livepeer:** Livepeer is employed for livestreaming capabilities, ensuring high-quality live educational events.
 
-- **The Graph:** The Graph is utilized for efficient data indexing and querying on the blockchain.
-
 ## Bonus
 
 - Demo: <Link>
 
 - Video: <Link>
+
+- Tweet: <Link>
