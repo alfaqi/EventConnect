@@ -18,13 +18,13 @@ EventConnect is an integral part of EduConnect, dedicated to event management an
 
 2. **Registering for an Event:** Learners can explore upcoming events on the platform, select the event of interest, and register for it.
 
-3. **Managing Events:** EventConnect educators can manage their events, including adding new content, assignments, and quizzes.
+3. **Managing Events:** EventConnect educators can manage their events.
 
 4. **Publishing POAP Certification** Educators can provide POAP Certifications to learners who participated in any events.
 
 ## Smart Contract
 
-- **Network**: Chiado (testnet)
+- **Network**: Gnosis Chiado (testnet)
 
 - **Address**: 0xF559545F7F6FBdBa0C79cDF75e51281ef74C6563
 
