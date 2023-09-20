@@ -53,3 +53,12 @@ This is an original work by our team. We build on top of the following tooling:
 - **IPFS:** IPFS (InterPlanetary File System) is used for decentralized file storage and content retrieval.
 
 - **Livepeer:** Livepeer is employed for livestreaming capabilities, ensuring high-quality live educational events.
+
+## Bonus
+
+- Video: https://github.com/alfaqi/EventConnectMedia/
+  I uploaded the video on GitHub for privacy reasons, and I split the video into chunks because GitHub doesn't accept files larger than 25MB. I apologize for any inconvenience.
+
+## POAP Issues
+
+I'm experiencing an issue with the POAP website because it requires Auth keys (Access token), and there's a delay in receiving them. Due to this, the automatic certificate distribution process is currently unavailable.
