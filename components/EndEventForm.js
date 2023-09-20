@@ -1,74 +1,76 @@
-import React, { useEffect, useState } from "react";
-import { useMoralis, useWeb3Contract } from "react-moralis";
-import { Form, useNotification } from "web3uikit";
-import networkMapping from "../constants/networkMapping.json";
-import eventConnectAbi from "../constants/EventConnect.json";
+// No need for ending Evets manually
 
-export default () => {
-  const { isWeb3Enabled, chainId, account } = useMoralis();
-  const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
-  const eventConnectAddress = networkMapping[chainIdString].EventConnect[0];
+// import React, { useEffect, useState } from "react";
+// import { useMoralis, useWeb3Contract } from "react-moralis";
+// import { Form, useNotification } from "web3uikit";
+// import networkMapping from "../constants/networkMapping.json";
+// import eventConnectAbi from "../constants/EventConnect.json";
 
-  const dispatch = useNotification();
-  const { runContractFunction } = useWeb3Contract();
+// export default () => {
+//   const { isWeb3Enabled, chainId, account } = useMoralis();
+//   const chainIdString = chainId ? parseInt(chainId).toString() : "31337";
+//   const eventConnectAddress = networkMapping[chainIdString].EventConnect[0];
 
-  async function EndEvent(data) {
-    console.log("Ending Event...");
-    const number = data.data[0].inputResult;
+//   const dispatch = useNotification();
+//   const { runContractFunction } = useWeb3Contract();
 
-    const endEventOptions = {
-      abi: eventConnectAbi,
-      contractAddress: eventConnectAddress,
-      functionName: "endEvent",
-      params: {
-        eventID: number,
-      },
-    };
+//   async function EndEvent(data) {
+//     console.log("Ending Event...");
+//     const number = data.data[0].inputResult;
 
-    await runContractFunction({
-      params: endEventOptions,
-      onSuccess: (tx) => handleListSuccess(tx),
-      onError: (error) => {
-        console.log(error);
-      },
-    });
+//     const endEventOptions = {
+//       abi: eventConnectAbi,
+//       contractAddress: eventConnectAddress,
+//       functionName: "endEvent",
+//       params: {
+//         eventID: number,
+//       },
+//     };
 
-    console.log("Event Ended!");
-  }
+//     await runContractFunction({
+//       params: endEventOptions,
+//       onSuccess: (tx) => handleListSuccess(tx),
+//       onError: (error) => {
+//         console.log(error);
+//       },
+//     });
 
-  async function handleListSuccess(tx) {
-    await tx.wait(1);
-    dispatch({
-      type: "success",
-      message: "Event Ended!",
-      title: "Ending Event",
-      position: "topR",
-    });
-  }
+//     console.log("Event Ended!");
+//   }
 
-  async function setupUI() {}
+//   async function handleListSuccess(tx) {
+//     await tx.wait(1);
+//     dispatch({
+//       type: "success",
+//       message: "Event Ended!",
+//       title: "Ending Event",
+//       position: "topR",
+//     });
+//   }
 
-  useEffect(() => {
-    setupUI();
-  }, [account, isWeb3Enabled, chainId]);
+//   async function setupUI() {}
 
-  return (
-    <>
-      <div className="flex gap-2">
-        <Form
-          onSubmit={EndEvent}
-          data={[
-            {
-              name: "Event Number",
-              type: "number",
-              value: "",
-              key: "event",
-            },
-          ]}
-          title="End Event"
-          id="Main Form"
-        />
-      </div>
-    </>
-  );
-};
+//   useEffect(() => {
+//     setupUI();
+//   }, [account, isWeb3Enabled, chainId]);
+
+//   return (
+//     <>
+//       <div className="flex gap-2">
+//         <Form
+//           onSubmit={EndEvent}
+//           data={[
+//             {
+//               name: "Event Number",
+//               type: "number",
+//               value: "",
+//               key: "event",
+//             },
+//           ]}
+//           title="End Event"
+//           id="Main Form"
+//         />
+//       </div>
+//     </>
+//   );
+// };

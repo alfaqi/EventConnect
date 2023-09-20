@@ -5,7 +5,7 @@ import eventConnectAbi from "@/constants/EventConnect.json";
 import EventCard from "@/components/EventCard";
 import Link from "next/link";
 
-export default function Events() {
+export default () => {
   const [eventConnectAddress, setEventConnectAddress] = useState(0);
 
   const { isWeb3Enabled, chainId, account } = useMoralis();
@@ -85,4 +85,4 @@ export default function Events() {
       )}
     </>
   );
-}
+};

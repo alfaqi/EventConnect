@@ -6,8 +6,10 @@ import Link from "next/link";
 import CreateStreamModal from "@/components/CreateStreamModal";
 
 export default () => {
+  // Using Moralis's plan to check for Web3 enablement
   const { isWeb3Enabled, account } = useMoralis();
 
+  // States for user-entered fields
   const [name, setName] = useState("");
   const [date, setDate] = useState(0);
   const [duration, setDuration] = useState("30");
@@ -16,12 +18,15 @@ export default () => {
   const [poapID, setPoapID] = useState(1);
   const [uploadFile, setUploadFile] = useState("");
 
+  // State for showing the active Create Event modal
   const [showCreateStreamModal, setShowCreateStreamModal] = useState(false);
   const hideCreateStreamModal = () => setShowCreateStreamModal(false);
 
+  // Handle click on the button to create the event
   const handleCardClick = () => {
     const today = new Date();
 
+    // Validate user-entered data
     if (name === "") {
       alert("Please fill the name of Event");
       return;
@@ -30,20 +35,22 @@ export default () => {
     //   alert("The date must be bigger then today");
     //   return;
     // }
+
     if (!uploadFile) {
       alert("Please upload an image for Event");
       return;
     }
     if (uploadFile.size > 5242880) {
       console.log(uploadFile);
-      alert("Image size must be less then 5MB");
+      alert("Image size must be less than 5MB");
       return;
     }
     if (!["image/jpeg", "image/png", "image/gif"].includes(uploadFile.type)) {
-      alert("Image must be PNG / JPG / GIF format file");
+      alert("Image must be in PNG / JPG / GIF format");
       return;
     }
 
+    // If logged in, open the Create Event modal
     account ? setShowCreateStreamModal(true) : setShowCreateStreamModal(false);
   };
 
@@ -108,11 +115,11 @@ export default () => {
                   },
                   {
                     id: "60",
-                    label: "60 Mintues",
+                    label: "60 Minutes",
                   },
                   {
                     id: "90",
-                    label: "90 Mintues",
+                    label: "90 Minutes",
                   },
                 ]}
               />

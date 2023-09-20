@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useMoralis } from "react-moralis";
 
-export default function Events() {
+export default () => {
   const { isWeb3Enabled } = useMoralis();
 
   return (
@@ -56,4 +56,4 @@ export default function Events() {
       )}
     </>
   );
-}
+};

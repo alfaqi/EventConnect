@@ -32,7 +32,6 @@ export default ({
       params: registerEventOptions,
       onSuccess: (tx) => handleSuccess(tx),
       onError: (error) => {
-        console.log(event);
         console.log(error);
       },
     });

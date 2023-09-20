@@ -18,17 +18,24 @@ export default ({
   const { account } = useMoralis();
 
   const gotoEventFunc = () => {
-    if (eventBy.toLowerCase() === account) {
-      window.open(
-        `/Live/Live?id=${broadCast}&title=${event.name}&auth=0`,
-        "_blank"
-      );
-    } else {
-      window.open(
-        `/Live/Live?id=${event.playbackId}&title=${event.name}&auth=1`,
-        "_blank"
-      );
-    }
+    // if (eventBy.toLowerCase() === account) {
+    //   window.open(
+    //     `/Live/Live?id=${broadCast}&title=${event.name}&auth=0`,
+    //     "_blank"
+    //   );
+    // } else {
+    //   window.open(
+    //     `/Live/Live?id=${event.playbackId}&title=${event.name}&auth=1`,
+    //     "_blank"
+    //   );
+    // }
+
+    const liveEventURL =
+      eventBy.toLowerCase() === account
+        ? `/Live/Live?id=${broadCast}&title=${event.name}&auth=0`
+        : `/Live/Live?id=${event.playbackId}&title=${event.name}&auth=1`;
+
+    window.location.href = liveEventURL;
   };
 
   return (

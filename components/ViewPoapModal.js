@@ -20,18 +20,15 @@ export default ({ poapEventID }) => {
     await fetch(`https://api.poap.tech/events/id/${poapEventID}`, options)
       .then((response) => response.json())
       .then((response) => {
-        console.log(response);
         setPoapEvent(response);
       })
       .catch((err) => console.error(err));
-    const text = poapEvent?.name;
-
-    console.log(text?.split("-"));
   }
 
   //To find out whether your request is still pending or not, use the GET /redeem-requests/active/count endpoint.
   //A result of 0 means that there are no pending requests
   async function checkRequest() {
+    // Next Version
     const options = {
       method: "GET",
       headers: {
@@ -40,7 +37,7 @@ export default ({ poapEventID }) => {
       },
     };
 
-    fetch(
+    await fetch(
       `https://api.poap.tech/redeem-requests/active/count?event_id=${poapEventID}&redeem_type=qr_code`,
       options
     )

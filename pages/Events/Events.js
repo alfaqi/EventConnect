@@ -1,27 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMoralis, useWeb3Contract } from "react-moralis";
+import Link from "next/link";
 import networkMapping from "@/constants/networkMapping.json";
 import eventConnectAbi from "@/constants/EventConnect.json";
 import EventCard from "@/components/EventCard";
-import Link from "next/link";
 
-import { useQuery, gql } from "@apollo/client";
-
-export default function Events() {
-  // Using Thegraph indexer
-  const GET_EVENT_CREATED = gql`
-    {
-      eventCreateds {
-        id
-        eventID
-        eventURI
-        poapID
-      }
-    }
-  `;
-
-  const { loading, error, data: eventCreated } = useQuery(GET_EVENT_CREATED);
-
+export default () => {
   const [eventConnectAddress, setEventConnectAddress] = useState(0);
 
   const { isWeb3Enabled, chainId, account } = useMoralis();
@@ -47,9 +31,6 @@ export default function Events() {
     let onlineEventsArr = [];
     let endedEventsArr = [];
     let upcomingEventsArr = [];
-
-    // if (eventAdded.eventCreateds.length == 0) return;
-    // for (let i of eventAdded.eventCreateds) {
 
     for (let i of allEvents) {
       await fetch(i.eventURI)
@@ -83,18 +64,19 @@ export default function Events() {
 
   useEffect(() => {
     if (isWeb3Enabled) {
-      // console.log(chainIdString);
       setEventConnectAddress(networkMapping[chainIdString].EventConnect[0]);
-
-      // console.log(networkMapping[chainIdString].EventConnect[0]);
-      // console.log(eventConnectAddress);
-
       const updateUIFunc = async () => {
-        await updateUI();
+        try {
+          await updateUI();
+        } catch (error) {
+          console.error("Error updating UI:", error);
+        }
       };
       updateUIFunc();
     }
   }, [isWeb3Enabled, account]);
+
+  // Render UI
   return (
     <>
       {isWeb3Enabled ? (
@@ -103,6 +85,7 @@ export default function Events() {
             Back
           </Link>
           <div className="container mx-auto">
+            {/* Render online events */}
             <h1 className="py-4 px-4 font-bold text-2xl">Now Events</h1>
             <div className="flex flex-wrap gap-2">
               {onlineEvents.slice(0, maxEvents).map((event, index) => {
@@ -127,6 +110,8 @@ export default function Events() {
             </div>
             <br />
             <hr />
+
+            {/* Render upcoming events */}
             <h1 className="py-4 px-4 font-bold text-2xl">Upcoming Events</h1>
             <div className="flex flex-wrap gap-2">
               {upcomingEvents.slice(0, maxEvents).map((event, index) => {
@@ -152,6 +137,7 @@ export default function Events() {
             <br />
             <hr />
 
+            {/* Render ended events */}
             <h1 className="py-4 px-4 font-bold text-2xl">Event Ended</h1>
             <div className="flex flex-wrap gap-2">
               {endedEvents.slice(0, maxEvents).map((event, index) => {
@@ -183,4 +169,4 @@ export default function Events() {
       )}
     </>
   );
-}
+};

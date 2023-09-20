@@ -39,11 +39,13 @@ export default () => {
       onSuccess: (poapIDD) => {
         if (poapIDD.toString() == 0) {
           alert("You didn't create a drop for this event");
+          return;
         }
       },
       onError: () => {
         setPoapEventID(0);
         alert("There is no event created!");
+        return;
       },
     });
 

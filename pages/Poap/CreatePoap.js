@@ -53,6 +53,7 @@ export default () => {
   async function checkEvent() {
     setIsThereEvent(false);
     setShowCreateButton(false);
+    // setPoapEventID(0);
 
     if (eventID <= -1) {
       alert("Event ID must be bigger then 0");
@@ -66,7 +67,6 @@ export default () => {
       alert("Event not existed");
       return;
     }
-    console.log(eventObj);
 
     if (eventObj.creator.toLowerCase() != account) {
       alert("This event was not created by you");
@@ -138,7 +138,6 @@ export default () => {
         );
         setExpiryDate(expiryDateFormatted);
         if (isThereEvent) {
-          console.log(isThereEvent);
           return;
         }
         if (secretCode == 0)
@@ -146,7 +145,7 @@ export default () => {
       });
   }
 
-  //POAP Section
+  // POAP Section
   // Create Drop Function
   async function createDrop() {
     if (
@@ -155,7 +154,7 @@ export default () => {
       alert("Image must be PNG / JPG / GIF format file");
       return;
     }
-    if (email) {
+    if (!email) {
       alert("Please enter valid email");
     }
     const form = new FormData();
@@ -194,7 +193,6 @@ export default () => {
           alert(response.message);
           console.log(response);
           return;
-          // setPoapEvent(response);
         } else {
           setPoapEventID(response?.id);
           console.log(response);
@@ -213,7 +211,7 @@ export default () => {
           <Link href={"/Poap"} className="Link__Back">
             Back
           </Link>
-          {poapEventID ? (
+          {poapEventID != 0 ? (
             <CreatePoapModal
               eventID={eventID}
               poapID={poapEventID}

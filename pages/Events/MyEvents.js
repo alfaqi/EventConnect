@@ -40,9 +40,6 @@ export default () => {
         params: funcOptions,
       });
 
-      console.log(isParticipated);
-      console.log(isParticipated);
-
       const getEventOptions = {
         abi: eventConnectAbi,
         contractAddress: networkMapping[chainIdString].EventConnect[0],
@@ -80,12 +77,10 @@ export default () => {
       }
     }
     setArr(myEventsArr);
-    console.log(!arr);
   }
 
   async function updateUI() {
     setEventConnectAddress(networkMapping[chainIdString].EventConnect[0]);
-    console.log(networkMapping[chainIdString].EventConnect[0]);
     await getMyEvents();
   }
 

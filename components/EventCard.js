@@ -82,7 +82,6 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
     }
 
     setShowEventViewModal(true);
-    // } else
   };
 
   //MyEvents Section
@@ -123,11 +122,8 @@ export default ({ eventConnectAddress, event, time, myEvents }) => {
 
     setIsParticipantRegistered(await isParticipantRegisteredFunc());
     const creatoR = await getOneEvent();
-    console.log(event);
-    console.log(await getOneEvent());
     setEventBy(creatoR.creator);
     setBroadCastKey(creatoR.streamKey);
-    // console.log(creatoR.streamKey);
 
     // My Events Section
     const nowTime = new Date() / 1000;
