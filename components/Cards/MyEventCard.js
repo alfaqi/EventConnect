@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import { Card } from "web3uikit";
 import eventConnectAbi from "@/constants/EventConnect.json";
 import { useMoralis, useWeb3Contract } from "react-moralis";
-import EventID from "../Modals/Commons/EventID";
-import EventImage from "../Modals/Commons/EventImage";
-import EventDuration from "../Modals/Commons/EventDuration";
-import EventBy from "../Modals/Commons/EventBy";
-import EventParticipants from "../Modals/Commons/EventParticipants";
-import EventStatus from "../Modals/Commons/EventStatus";
-import EventDate from "../Modals/Commons/EventDate";
+import {
+  EventBy,
+  EventDate,
+  EventParticipants,
+  EventStatus,
+  EventImage,
+  EventDuration,
+  EventID,
+  EventName,
+} from "../Commons/index";
 
 export default ({ eventConnectAddress, event }) => {
   const { isWeb3Enabled, account } = useMoralis();
@@ -65,7 +68,7 @@ export default ({ eventConnectAddress, event }) => {
   return (
     <div>
       <Card
-        title={event.name}
+        title={<EventName name={event.name} />}
         description={<EventDate date={event.date} />}
         // onClick={eventTime == "online" ? gotoEventFunc : () => {}}
         cursorType="pointer"

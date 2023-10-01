@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "web3uikit";
 import { parse } from "url";
 import { useMoralis } from "react-moralis";
-import LiveFrame from "@/components/LiveFrame";
-import LiveBroadcast from "@/components/LiveBroadcast";
+import LiveFrame from "@/components/LiveComp/LiveFrame";
+import LiveBroadcast from "@/components/LiveComp/LiveBroadcast";
 
 export default function live() {
   const { account } = useMoralis();

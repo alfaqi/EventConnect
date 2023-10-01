@@ -4,10 +4,7 @@ import EventViewModal from "../Modals/EventViewModal";
 import eventConnectAbi from "@/constants/EventConnect.json";
 import { useMoralis, useWeb3Contract } from "react-moralis";
 import EventRegisterModal from "../Modals/EventRegisterModal";
-import EventID from "../Modals/Commons/EventID";
-import EventImage from "../Modals/Commons/EventImage";
-import EventDate from "../Modals/Commons/EventDate";
-
+import { EventDate, EventImage, EventID, EventName } from "../Commons/index";
 //Event Card
 export default ({ eventConnectAddress, event, time }) => {
   const { isWeb3Enabled, account } = useMoralis();
@@ -129,7 +126,7 @@ export default ({ eventConnectAddress, event, time }) => {
       )}
 
       <Card
-        title={event.name}
+        title={<EventName name={event.name} />}
         description={<EventDate date={event.date} />}
         onClick={handleCardClick}
       >

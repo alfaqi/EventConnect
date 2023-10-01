@@ -1,13 +1,15 @@
 import { Modal } from "web3uikit";
-import EventBy from "./Commons/EventBy";
-import Duration from "./Commons/EventDuration";
-import EventDate from "./Commons/EventDate";
-import EventDescription from "./Commons/EventDescription";
-import EventName from "./Commons/EventName";
-import EventParticipants from "./Commons/EventParticipants";
-import EventStatus from "./Commons/EventStatus";
-import EventImage from "./Commons/EventImage";
-import EventID from "./Commons/EventID";
+import {
+  EventBy,
+  EventDuration,
+  EventDate,
+  EventDescription,
+  EventName,
+  EventParticipants,
+  EventStatus,
+  EventImage,
+  EventID,
+} from "../Commons/index";
 
 export default ({
   eventEnded,
@@ -51,7 +53,7 @@ export default ({
           <div className="p-1 text-base">
             <EventDate date={event.date} />
             <hr />
-            <Duration duration={event.duration} />
+            <EventDuration duration={event.duration} />
             <hr />
             <EventBy eventBy={eventBy} />
             <hr />

@@ -2,19 +2,20 @@ import { Modal, useNotification } from "web3uikit";
 import Image from "next/image";
 
 import eventConnectAbi from "@/constants/EventConnect.json";
-import { useMoralis, useWeb3Contract } from "react-moralis";
-import EventImage from "./Commons/EventImage";
-import EventName from "./Commons/EventName";
-import EventDescription from "./Commons/EventDescription";
-import EventDate from "./Commons/EventDate";
-import EventDuration from "./Commons/EventDuration";
-import EventBy from "./Commons/EventBy";
-import EventParticipants from "./Commons/EventParticipants";
-
+import { useWeb3Contract } from "react-moralis";
+import {
+  EventBy,
+  EventDuration,
+  EventDate,
+  EventDescription,
+  EventName,
+  EventParticipants,
+  EventImage,
+  EventID,
+} from "../Commons/index";
 export default ({
   eventConnectAddress,
   event,
-  date,
   eventBy,
   attendees,
   isParticipantRegistered,
@@ -93,7 +94,7 @@ export default ({
         }}
       >
         <div className="flex flex-col">
-          <p>Event ID: {Number(event.eventID) + 1}</p>
+          <EventID eventID={event.eventID} />
           <div className="flex flex-col gap-2 items-center border-solid border-2 border-gray-400 rounded p-2 w-fit">
             <EventImage name={event.name} banner={event.banner} />
             <EventName name={event.name} />
