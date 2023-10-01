@@ -54,10 +54,6 @@ This is an original work by our team. We build on top of the following tooling:
 
 - **Livepeer:** Livepeer is employed for livestreaming capabilities, ensuring high-quality live educational events.
 
-## Bonus
-
-- Video: https://github.com/alfaqi/EventConnectMedia/
-  I uploaded the video on GitHub for privacy reasons, and I split the video into chunks because GitHub doesn't accept files larger than 25MB. I apologize for any inconvenience.
 
 ## POAP Issues
 
