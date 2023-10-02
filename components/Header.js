@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ConnectButton } from "web3uikit";
+import { EventsMenu } from "./NavBar";
 
 export default () => {
   return (
@@ -9,6 +10,7 @@ export default () => {
         <Link className="mr-4 p-6" href="/Events/Events">
           Home
         </Link>
+        {/* <EventsMenu /> */}
 
         <Link className="mr-4 p-6" href="/Events/">
           Events

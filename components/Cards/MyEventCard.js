@@ -70,7 +70,6 @@ export default ({ eventConnectAddress, event }) => {
       <Card
         title={<EventName name={event.name} />}
         description={<EventDate date={event.date} />}
-        // onClick={eventTime == "online" ? gotoEventFunc : () => {}}
         cursorType="pointer"
       >
         <EventID eventID={event.eventID} />
