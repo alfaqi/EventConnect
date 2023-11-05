@@ -6,7 +6,7 @@ import eventConnectAbi from "@/constants/EventConnect.json";
 
 import dotenv from "dotenv";
 import Link from "next/link";
-import CreatePoapModal from "@/components/CreatePoapModal";
+import CreatePoapModal from "@/components/Modals/CreatePoapModal";
 import Image from "next/image";
 dotenv.config();
 
