@@ -1,6 +1,6 @@
 # EventConnect
 
-Live Dome [EventConnect](https://event-connect-alpha.vercel.app/)
+Live Dome [EventConnect](https://event-connect-alpha.vercel.app/) (Gnosis Chiado Testnet)
 
 EventConnect is an integral part of EduConnect, dedicated to event management and educational gatherings.
 
