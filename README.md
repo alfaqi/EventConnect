@@ -1,6 +1,6 @@
 # EventConnect
 
-Live Dome [EventConnect](https://event-connect-alpha.vercel.app/) (Gnosis Chiado Testnet)
+Live Demo [EventConnect](https://event-connect-alpha.vercel.app/) (Gnosis Chiado Testnet)
 
 ## Overview
 
